@@ -1,2 +1,2 @@
 export default function Page() { 
-    return <p>Cust Page</p>; }
+    return <p>Contact Page</p>; }

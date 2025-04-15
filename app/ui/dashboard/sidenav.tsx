@@ -1,29 +1,35 @@
-import Link from 'next/link';
+'use client';
+
 import NavLinks from '@/app/ui/dashboard/nav-links';
-import AcmeLogo from '@/app/ui/acme-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 
-export default function SideNav() {
+export default function Navbar() {
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2">
-      <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
-        href="/"
-      >
-        <div className="w-32 text-white md:w-40">
-          <AcmeLogo />
-        </div>
-      </Link>
-      <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <NavLinks />
-        <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
-        <form>
-          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-            <PowerIcon className="w-6" />
-            <div className="hidden md:block">Sign Out</div>
-          </button>
-        </form>
+    <header className="w-full bg-[#D39C9C] text-white shadow-md fixed top-0 left-0 h-16 flex items-center px-4 z-50 justify-between">
+      {/* Kiri: Logo & Nama */}
+      <div className="flex items-center gap-3">
+        <img
+          src="/logoRalivelle.png"
+          alt="Ralivelle Florist Logo"
+          className="h-10 w-10 rounded-full object-cover"
+        />
+        <p className="text-xl md:text-2xl font-bold tracking-wide">
+          Ralivelle Florist
+        </p>
       </div>
-    </div>
+
+      {/* Tengah: NavLinks (horizontal) */}
+      <nav className="hidden md:flex gap-6 items-center text-sm">
+        <NavLinks />
+      </nav>
+
+      {/* Kanan: Tombol Logout */}
+      <form>
+        <button className="flex flex-col items-center justify-center gap-1 w-16 h-16 rounded-lg text-[10px] p-2 hover:text-red-100">
+          <PowerIcon className="w-5 h-5" />
+          <span className="text-[10px]">Log Out</span>
+        </button>
+      </form>
+    </header>
   );
 }

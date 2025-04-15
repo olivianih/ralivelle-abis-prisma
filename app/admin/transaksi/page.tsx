@@ -1,2 +1,2 @@
 export default function Page() { 
-    return <p>Inv Page</p>; }
+    return <p>Tsi Page</p>; }
