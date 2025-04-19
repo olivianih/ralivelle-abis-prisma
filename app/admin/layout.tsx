@@ -1,3 +1,5 @@
+// yy
+
 import '@/app/ui/global.css';
 // import { amita } from '@/app/ui/fonts';
 import Navbar from '@/app/components/NavbarAdmin';
