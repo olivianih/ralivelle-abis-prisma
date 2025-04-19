@@ -9,26 +9,26 @@ export default function Navbar() {
           alt="Ralivelle Florist Logo"
           className="h-10 w-10 rounded-full object-cover"
         />
-        <p className="text-xl md:text-2xl font-bold tracking-wide">
+        <p className="text-2xl md:text-2xl font-bold tracking-wide">
           Ralivelle Florist
         </p>
       </div>
 
       <nav className="flex gap-4 ml-auto">
-        <Link href="/" className="text-white hover:text-gray-200">
+        <Link href="/" className="text-white hover:underline">
           Home
         </Link>
-        <Link href="/about" className="text-white hover:text-gray-200">
+        <Link href="/about" className="text-white hover:underline">
           About
         </Link>
-        <Link href="/shop" className="text-white hover:text-gray-200">
+        <Link href="/shop" className="text-white hover:underline">
           Shop
         </Link>
-        <Link href="/contact" className="text-white hover:text-gray-200">
+        <Link href="/contact" className="text-white hover:underline">
           Contact
         </Link>
-        <Link href="" className="text-white hover:text-gray-200">
-          Akun
+        <Link href="" className="text-white hover:underline">
+          Log Out
         </Link>
       </nav>
     </header>

@@ -8,7 +8,7 @@ export default function Footer() {
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:underline">
             Instagram
           </a>
-          <a href="mailto:ralivelle@example.com" className="hover:underline">
+          <a href="mailto:oliviattan@gmail.com" className="hover:underline">
             Email
           </a>
           <a href="/contact" className="hover:underline">
