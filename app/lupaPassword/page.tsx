@@ -2,7 +2,7 @@
 
 export default function ForgotPasswordPage() {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen font-sans">
       {/* Kiri (Logo dan Branding) */}
       <div className="w-[30%] bg-[#CFA8A0] flex flex-col items-center justify-center p-10">
         <div className="flex flex-col items-center">
