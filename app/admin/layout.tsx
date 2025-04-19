@@ -1,14 +1,13 @@
 import '@/app/ui/global.css';
-import { amita } from '@/app/ui/fonts';
+// import { amita } from '@/app/ui/fonts';
+import Navbar from '@/app/components/NavbarAdmin';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${amita.className} antialiased`}>{children}</body>
-    </html>
+    <>
+      <Navbar />
+      <main className="p-6">{children}</main>
+    </>
   );
 }
+
