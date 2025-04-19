@@ -1,21 +1,19 @@
 // This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
 // https://nextjs.org/learn/dashboard-app/fetching-data
-
 const dummyTransaksi = [
-    {
-        id: 1,
-        produk: "Bunga Mawar",
-        pembeli: "Sinta",
-        tanggal: "2024-04-18",
-    },
-    {
-        id: 2,
-        produk: "Buket Lily",
-        pembeli: "Dina",
-        tanggal: "2024-04-17",
-    },
+  {
+    id: 1,
+    produk: "Dear Zhenya Bouquet",
+    pembeli: "Taekjo",
+    tanggal: "2024-04-18",
+  },
+  {
+    id: 2,
+    produk: "Dear Jooyeon Bouquet",
+    pembeli: "Olivia",
+    tanggal: "2024-04-17",
+  },
 ];
-
 const dummyProducts = [
     {
         id: '1',
