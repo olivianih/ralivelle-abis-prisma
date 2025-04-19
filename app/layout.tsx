@@ -1,7 +1,6 @@
 import '@/app/ui/global.css';
-import Navbar from '@/app/components/Navbar';
-import Footer from '@/app/components/Footer';
 import { amita } from "@/app/ui/fonts";
+import ClientLayoutWrapper from './clientLayout';
 
 export default function RootLayout({
   children,
@@ -15,10 +14,8 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Ralivelle Florist</title>
       </head>
-      <body className={`${amita.className}`}>
-      <Navbar />
-        <main className="flex-grow mt-16 p-6">{children}</main>
-        <Footer />
+      <body className={`${amita.className} h-screen m-0 p-0`}>
+        <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
     </html>
   );
