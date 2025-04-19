@@ -43,13 +43,6 @@ export default function ProductDetailPage() {
           <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
           <p className="text-gray-700 mb-6">{product.description}</p>
           <p className="text-blue-600 text-xl font-semibold">{product.price}</p>
-
-          <button
-            className="mt-6 w-fit px-4 py-2 bg-[#ECD3DB] text-black rounded-lg hover:bg-[#D39C9C] transition"
-            onClick={() => alert('Produk ditambahkan ke keranjang!')}
-          >
-            Tambah ke Keranjang
-          </button>
         </div>
       </div>
     </div>
