@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
   const bestSellerProducts = dummyProducts.slice(0, 3);
-  const router = useRouter(); 
+  const router = useRouter();
 
   return (
     <main className="flex min-h-screen flex-col p-6">
@@ -56,5 +56,8 @@ export default function HomePage() {
             </div>
           ))}
         </div>
-    );
+      </div>
+    </main>
+
+  );
 }
