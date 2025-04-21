@@ -25,7 +25,7 @@ export default function ShopPage() {
         <section className="p-6">
             <div><Breadcrumbs
                 breadcrumbs={[
-                    { label: 'Beranda', href: '/' },
+                    { label: 'Ralivelle', href: '/' },
                     { label: 'Shop', href: '/shop', active: true },
                 ]}
             />

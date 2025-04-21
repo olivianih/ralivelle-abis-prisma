@@ -27,7 +27,7 @@ export default function AboutPage() {
         <section className="p-6 flex flex-col gap-12">
             <Breadcrumbs
                 breadcrumbs={[
-                    { label: 'Beranda', href: '/' },
+                    { label: 'Ralivelle', href: '/' },
                     { label: 'About', href: '#', active: true },
                 ]}
             />

@@ -24,7 +24,7 @@ export default function ProductDetailPage() {
     <div className="p-6">
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Beranda', href: '/' },
+          { label: 'Ralivelle', href: '/' },
           { label: 'Shop', href: '/shop' },
           { label: 'Detail Produk', href: '#', active: true }
         ]}

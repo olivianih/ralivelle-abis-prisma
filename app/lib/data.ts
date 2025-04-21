@@ -3,14 +3,14 @@ import {
   Produk,
   Transaksi
 } from './definitions';
-import { formatCurrency } from './utils';
+// import { formatCurrency } from './utils';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function fetchProducts() {
   try {
     const products = await sql`
-      SELECT id, name, description, image_url, price FROM products
+      SELECT id, name, description, imageUrl, price FROM products
     `;
     return products;
   } catch (error) {
