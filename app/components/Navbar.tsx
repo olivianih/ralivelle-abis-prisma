@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link';
 
 export default function Navbar() {
@@ -5,7 +7,7 @@ export default function Navbar() {
     <header className="w-full bg-[#D39C9C] text-white shadow-md fixed top-0 left-0 h-20 flex items-center px-4 z-50 justify-between">
       <div className="flex items-center gap-3">
         <img
-          src="logoRalivelle.png"
+          src="/logoRalivelle.png"
           alt="Ralivelle Florist Logo"
           className="h-10 w-10 rounded-full object-cover"
         />
@@ -15,7 +17,7 @@ export default function Navbar() {
       </div>
 
       <nav className="flex gap-4 ml-auto">
-        <Link href="/" className="text-white hover:underline">
+        <Link href="/home" className="text-white hover:underline">
           Home
         </Link>
         <Link href="/about" className="text-white hover:underline">
@@ -27,9 +29,18 @@ export default function Navbar() {
         <Link href="/contact" className="text-white hover:underline">
           Contact
         </Link>
-        <Link href="" className="text-white hover:underline">
+        <a
+          onClick={(e) => {
+            e.preventDefault();
+            const confirmLogout = window.confirm('Anda akan log out dari website');
+            if (confirmLogout) {
+              window.location.href = '/login';
+            }
+          }}
+          className="cursor-pointer text-white hover:underline"
+        >
           Log Out
-        </Link>
+        </a>
       </nav>
     </header>
   );

@@ -6,14 +6,13 @@ export default function ContactPage() {
       <h1 className="text-2xl font-bold text-center mb-10">Perlu Bantuan?</h1>
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-8 rounded-lg shadow-md">
         
-        {/* Kontak Info */}
         <div className="flex flex-col items-center justify-center text-center space-y-6">
           <div className="flex flex-col items-center">
-            <PhoneIcon className="w-8 h-8 text-blue-600" />
+            <PhoneIcon className="w-8 h-8 text-[#D39C9C]" />
             <p className="text-lg font-medium mt-2">(021)22172135</p>
           </div>
           <div className="flex flex-col items-center">
-            <MapPinIcon className="w-8 h-8 text-blue-600" />
+            <MapPinIcon className="w-8 h-8 text-[#D39C9C]" />
             <p className="font-semibold mt-2">Ralievelle Florist</p>
             <p className="text-sm text-gray-600 max-w-xs mt-1">
             Jl. Melati Indah No. 23, Kecamatan Setiabudi, Jakarta Selatan, DKI Jakarta
@@ -21,7 +20,6 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Form Kontak */}
         <form className="space-y-4">
           <div>
             <label className="block font-medium text-sm">
@@ -54,7 +52,7 @@ export default function ContactPage() {
           </div>
           <button
             type="submit"
-            className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800"
+            className="bg-[#ECD3DB] hover:bg-[#D39C9C] text-black px-6 py-2 rounded"
           >
             Kirim
           </button>

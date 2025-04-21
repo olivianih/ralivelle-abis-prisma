@@ -45,29 +45,20 @@ export default function TransaksiPage() {
 
   const filteredTransaksi = transaksi.filter((item) =>
     item.produk.toLowerCase().includes(searchQuery.toLowerCase())
-  );  
+  );
 
   return (
-    <main className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Daftar Transaksi</h1>
-      <div className="flex gap-4 mt-6 mb-6 border border-gray-400 rounded">
-                        <Search placeholder="Cari produk" onSearch={setSearchQuery} />
-                    </div>
-      {/* Tombol Tambah Produk & Tambah Transaksi */}
-      <div className="flex gap-4 mb-4">
-        
+    <main className="min-h-screen p-6 bg-white">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Daftar Transaksi</h1>
         <button
-          className="px-4 py-2 bg-[#D39C9C] text-white rounded hover:bg-pink-700"
           onClick={() => setShowForm(!showForm)}
+          className="bg-[#ECD3DB] hover:bg-[#D39C9C] text-black px-4 py-2 rounded-lg text-sm"
         >
-          {showForm ? "Batal" : "Tambah Produk"}
+          {showForm ? "Batal" : "Tambah Transaksi"}
         </button>
-
-        
-
       </div>
 
-      {/* Form Tambah Produk */}
       {showForm && (
         <div className="mb-4 space-y-2 bg-gray-50 p-4 rounded shadow border">
           <input
@@ -99,7 +90,13 @@ export default function TransaksiPage() {
         </div>
       )}
 
-      {/* Tabel Transaksi */}
+      <div className="mb-6 max-w">
+        <Search
+          placeholder="Cari transaksi..."
+          onSearch={setSearchQuery}
+        />
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border rounded shadow">
           <thead>

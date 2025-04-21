@@ -9,7 +9,6 @@ export default function AddProductForm({ onClose }: { onClose: () => void }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(`Produk baru ditambahkan:\nNama: ${name}\nDeskripsi: ${description}`);
-    // logika penyimpanan
     setName('');
     setDescription('');
     onClose();

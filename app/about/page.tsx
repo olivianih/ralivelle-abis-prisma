@@ -63,8 +63,6 @@ export default function AboutPage() {
                 </div>
             </div>
 
-
-
             <div>
                 <div className="w-full">
                     <h2 className="text-2xl font-semibold mb-6 text-center bg-[#D39C9C] text-black py-4 rounded">

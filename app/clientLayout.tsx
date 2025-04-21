@@ -11,7 +11,6 @@ export default function ClientLayoutWrapper({ children }: { children: React.Reac
   const isRegisterPage = pathname === '/register';
   const isForgotPasswordPage = pathname === '/lupaPassword';
 
-  // Lock scroll untuk halaman login, registrasi, dan lupa password
   useEffect(() => {
     if (isLoginPage || isRegisterPage || isForgotPasswordPage) {
       document.body.style.overflow = 'hidden';
@@ -22,7 +21,6 @@ export default function ClientLayoutWrapper({ children }: { children: React.Reac
 
   return (
     <div className={`min-h-screen flex flex-col ${isLoginPage || isRegisterPage || isForgotPasswordPage ? '' : 'overflow-auto'}`}>
-      {/* Hide Navbar and Footer for Login, Register, and Forgot Password pages */}
       {!isLoginPage && !isRegisterPage && !isForgotPasswordPage && <Navbar />}
       <main className={`flex-grow ${!isLoginPage && !isRegisterPage && !isForgotPasswordPage ? 'mt-16 p-6' : ''}`}>
         {children}

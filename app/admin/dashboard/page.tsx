@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { amita, lusitana } from '@/app/ui/fonts';
+import { dummyProducts, penjualanBulanan } from '@/app/lib/placeholder-data';
 
 export default function AdminDashboard() {
     const [currentTime, setCurrentTime] = useState('');
@@ -9,16 +9,8 @@ export default function AdminDashboard() {
     const [noteInput, setNoteInput] = useState('');
     const [notes, setNotes] = useState<string[]>([]);
 
-    const totalProduk = 150;
+    const totalProduk = dummyProducts.length;;
     const totalTransaksi = 75;
-    const penjualanBulanan = [
-        { bulan: 'Jan', total: 20 },
-        { bulan: 'Feb', total: 15 },
-        { bulan: 'Mar', total: 25 },
-        { bulan: 'Apr', total: 30 },
-        { bulan: 'Mei', total: 35 },
-        { bulan: 'Jun', total: 33 },
-    ];
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -52,14 +44,12 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-bold text-[#D39C9C] mb-1">Dashboard Admin</h1>
             <p className="text-gray-600 mb-6 text-base md:text-lg">Hai, <span className="font-semibold">{adminName}</span> 👋 Semangat bekerja hari ini!</p>
 
-            {/* Motivasi */}
             <div className="bg-gradient-to-r from-[#FFD5C2] to-[#FBE2DD] rounded-xl shadow p-6 flex items-center justify-center mb-6 w-full">
                 <blockquote className="text-center text-[#D39C9C] italic text-lg font-medium whitespace-normal">
                     "Setiap bunga mekar pada waktunya, begitu juga dengan kesuksesan Ralivelle Florist🌸."
                 </blockquote>
             </div>
 
-            {/* Ringkasan */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-sm">
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Waktu</p>
@@ -73,14 +63,14 @@ export default function AdminDashboard() {
                     <p className="text-gray-200">Total Transaksi</p>
                     <p className="text-lg font-bold">{totalTransaksi}</p>
                 </div>
-                {/* Kotak Baru */}
+
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Keterangan</p>
                     <p className="text-lg font-semibold">Toko Berjalan Lancar!</p>
                 </div>
             </div>
 
-            {/* Grafik Penjualan */}
+
             <div className="bg-white rounded-xl shadow p-6 mb-6">
                 <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Grafik Penjualan Bulanan</h2>
                 <div className="flex justify-around">
@@ -100,7 +90,6 @@ export default function AdminDashboard() {
                 </div>
             </div>
 
-            {/* Catatan Admin */}
             <div className="bg-[#D39C9C] rounded-xl shadow p-6">
                 <h3 className="text-lg font-semibold mb-2 text-white">Catatan Admin</h3>
                 <textarea

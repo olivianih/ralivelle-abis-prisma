@@ -17,7 +17,7 @@ export default function LoginPage() {
       router.push('/admin/dashboard');
     } else if (username === 'user123' && password === '12345') {
       localStorage.setItem('username', username);
-      router.push('/');
+      router.push('/home');
     } else {
       setError('Username atau password salah');
     }

@@ -7,13 +7,13 @@ import Search from '@/app/components/Search';
 import { useState } from 'react';
 
 export default function AdminProductPage() {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [products, setProducts] = useState(dummyProducts);
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
     const filteredProducts = products.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const [newProduct, setNewProduct] = useState({
@@ -62,12 +62,12 @@ export default function AdminProductPage() {
     return (
         <main className="min-h-screen p-6 bg-white">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold text-gray-800">Manajemen Produk</h1>
+                <h1 className="text-2xl font-bold">Daftar Produk</h1>
                 <button
                     onClick={() => setShowForm(!showForm)}
                     className="bg-[#ECD3DB] hover:bg-[#D39C9C] text-black px-4 py-2 rounded-lg text-sm"
                 >
-                    {showForm ? 'Batal' : '+ Tambah Produk'}
+                    {showForm ? 'Batal' : 'Tambah Produk'}
                 </button>
             </div>
 
@@ -116,7 +116,7 @@ export default function AdminProductPage() {
             <div className="mb-6 max-w">
                 <Search
                     placeholder="Cari produk..."
-                    onSearch={setSearchTerm}
+                    onSearch={setSearchQuery}
                 />
             </div>
 

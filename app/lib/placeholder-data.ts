@@ -59,4 +59,13 @@ const dummyProducts = [
     },
 ];
 
-export { dummyProducts, dummyTransaksi };
+const penjualanBulanan = [
+        { bulan: 'Jan', total: 20 },
+        { bulan: 'Feb', total: 15 },
+        { bulan: 'Mar', total: 25 },
+        { bulan: 'Apr', total: 30 },
+        { bulan: 'Mei', total: 35 },
+        { bulan: 'Jun', total: 33 },
+    ];
+
+export { dummyProducts, dummyTransaksi, penjualanBulanan };
