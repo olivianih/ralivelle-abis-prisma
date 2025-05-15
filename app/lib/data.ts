@@ -1,33 +1,63 @@
 import postgres from 'postgres';
 import {
   Produk,
-  Transaksi
+  Transaksi,
+  // supplier,
 } from './definitions';
+import { supplier, pelanggan } from '@/generated/prisma';
 // import { formatCurrency } from './utils';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-export async function fetchProducts() {
+// export async function fetchProducts() {
+//   try {
+//     const products = await sql`
+//       SELECT id, name, description, imageUrl, price FROM products
+//     `;
+//     return products;
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch products.');
+//   }
+// }
+
+export async function fetchSupplier() {
   try {
-    const products = await sql`
-      SELECT id, name, description, imageUrl, price FROM products
-    `;
-    return products;
+
+    console.log('Fetching produk data...');
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    const data = await sql<supplier[]>`
+    SELECT *
+    FROM supplier
+    ORDER BY nama_supplier ASC`;
+
+    console.log('Data fetch berhasil.');
+
+    return data;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch products.');
   }
 }
 
-export async function fetchTransaksi() {
+export async function fetchPelanggan() {
   try {
-    const transaksi = await sql`
-      SELECT id, produk, pembeli, tanggal FROM transaksi
-    `;
-    return transaksi;
+
+    console.log('Fetching pelanggan data...');
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    const data = await sql<pelanggan[]>`
+    SELECT *
+    FROM pelanggan
+    ORDER BY nama ASC`;
+
+    console.log('Data fetch berhasil.');
+
+    return data;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch transaksi.');
+    throw new Error('Failed to fetch pelanggan.');
   }
 }
 

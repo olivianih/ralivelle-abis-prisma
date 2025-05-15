@@ -16,3 +16,10 @@ export type Transaksi = {
   pembeli: string;
   tanggal: string;
 };
+
+export type supplier = {
+  id_supplier: string;
+  nama_supplier: string;
+  nomor_telepon :string;
+  alamat: string;
+}

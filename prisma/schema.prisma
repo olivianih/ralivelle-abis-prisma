@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model kategori {
+  id_kategori   String  @id
+  nama_kategori String?
+  deskripsi     String?
+}
+
+model pelanggan {
+  id_pelanggan  String  @id
+  nama          String?
+  email         String?
+  nomor_telepon String?
+  alamat        String?
+}
+
+model produk {
+  id_produk   Int     @id @default(autoincrement())
+  nama_produk String?
+  harga       String?
+  foto        String?
+  deskripsi   String?
+  id_kategori String?
+}
+
+model supplier {
+  id_supplier   String  @id
+  nama_supplier String?
+  nomor_telepon String?
+  alamat        String?
+}
+
+model transaksi {
+  id_transaksi      String  @id
+  id_produk         String?
+  nama_pelanggan    String?
+  tanggal_transaksi String?
+  total_harga       String?
+}

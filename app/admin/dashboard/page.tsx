@@ -1,48 +1,51 @@
-'use client';
+// 'use client';
 
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { dummyProducts, penjualanBulanan } from '@/app/lib/placeholder-data';
+import { fetchSupplier, fetchPelanggan } from '@/app/lib/data';
 
-export default function AdminDashboard() {
-    const [currentTime, setCurrentTime] = useState('');
-    const [adminName, setAdminName] = useState('');
-    const [noteInput, setNoteInput] = useState('');
-    const [notes, setNotes] = useState<string[]>([]);
+export default async function AdminDashboard() {
+    // const [currentTime, setCurrentTime] = useState('');
+    // const [adminName, setAdminName] = useState('');
+    // const [noteInput, setNoteInput] = useState('');
+    // const [notes, setNotes] = useState<string[]>([]);
+    const supplier = await fetchSupplier();
+    const pelanggan = await fetchPelanggan();
 
-    const totalProduk = dummyProducts.length;;
+    const totalProduk = dummyProducts.length;
     const totalTransaksi = 75;
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const interval = setInterval(() => {
-                const now = new Date();
-                setCurrentTime(now.toLocaleTimeString());
-            }, 1000);
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         const interval = setInterval(() => {
+    //             const now = new Date();
+    //             setCurrentTime(now.toLocaleTimeString());
+    //         }, 1000);
 
-            const username = localStorage.getItem('username');
-            if (username) setAdminName(username);
+    //         const username = localStorage.getItem('username');
+    //         if (username) setAdminName(username);
 
-            return () => clearInterval(interval);
-        }
-    }, []);
+    //         return () => clearInterval(interval);
+    //     }
+    // }, []);
 
-    const handleAddNote = () => {
-        if (noteInput.trim() !== '') {
-            setNotes([...notes, noteInput.trim()]);
-            setNoteInput('');
-        }
-    };
+    // const handleAddNote = () => {
+    //     if (noteInput.trim() !== '') {
+    //         setNotes([...notes, noteInput.trim()]);
+    //         setNoteInput('');
+    //     }
+    // };
 
-    const handleDeleteNote = (index: number) => {
-        const updatedNotes = [...notes];
-        updatedNotes.splice(index, 1);
-        setNotes(updatedNotes);
-    };
+    // const handleDeleteNote = (index: number) => {
+    //     const updatedNotes = [...notes];
+    //     updatedNotes.splice(index, 1);
+    //     setNotes(updatedNotes);
+    // };
 
     return (
         <div className="min-h-screen p-8 font-sans bg-[#F8F5F2] overflow-hidden">
             <h1 className="text-3xl font-bold text-[#D39C9C] mb-1">Dashboard Admin</h1>
-            <p className="text-gray-600 mb-6 text-base md:text-lg">Hai, <span className="font-semibold">{adminName}</span> 👋 Semangat bekerja hari ini!</p>
+            {/* <p className="text-gray-600 mb-6 text-base md:text-lg">Hai, <span className="font-semibold">{adminName}</span> 👋 Semangat bekerja hari ini!</p> */}
 
             <div className="bg-gradient-to-r from-[#FFD5C2] to-[#FBE2DD] rounded-xl shadow p-6 flex items-center justify-center mb-6 w-full">
                 <blockquote className="text-center text-[#D39C9C] italic text-lg font-medium whitespace-normal">
@@ -51,10 +54,10 @@ export default function AdminDashboard() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-sm">
-                <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
+                {/* <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Waktu</p>
                     <p className="text-lg font-semibold">{currentTime}</p>
-                </div>
+                </div> */}
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Total Produk</p>
                     <p className="text-lg font-bold">{totalProduk}</p>
@@ -90,15 +93,67 @@ export default function AdminDashboard() {
                 </div>
             </div>
 
+            {/* Tabel Supplier */}
+            <div className="bg-white rounded-xl shadow p-6 mb-6">
+                <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Daftar Supplier</h2>
+                <table className="min-w-full border text-sm text-gray-700">
+                    <thead className="bg-[#FBE2DD]">
+                        <tr>
+                            <th className="border p-2">ID Supplier</th>
+                            <th className="border p-2">Nama Supplier</th>
+                            <th className="border p-2">No. Telepon</th>
+                            <th className="border p-2">Alamat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {supplier.map((supplier) => (
+                            <tr key={supplier.id_supplier}>
+                                <td className="border p-2">{supplier.id_supplier}</td>
+                                <td className="border p-2">{supplier.nama_supplier}</td>
+                                <td className="border p-2">{supplier.nomor_telepon}</td>
+                                <td className="border p-2">{supplier.alamat}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Tabel Pelanggan */}
+            <div className="bg-white rounded-xl shadow p-6 mb-6">
+                <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Daftar Pelanggan</h2>
+                <table className="min-w-full border text-sm text-gray-700">
+                    <thead className="bg-[#FBE2DD]">
+                        <tr>
+                            <th className="border p-2">ID Pelanggan</th>
+                            <th className="border p-2">Nama Pelanggan</th>
+                            <th className="border p-2">No. Telepon</th>
+                            <th className="border p-2">Email</th>
+                            <th className="border p-2">Alamat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {pelanggan.map((pelanggan) => (
+                            <tr key={pelanggan.id_pelanggan}>
+                                <td className="border p-2">{pelanggan.id_pelanggan}</td>
+                                <td className="border p-2">{pelanggan.nama}</td>
+                                <td className="border p-2">{pelanggan.nomor_telepon}</td>
+                                <td className="border p-2">{pelanggan.email}</td>
+                                <td className="border p-2">{pelanggan.alamat}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
             <div className="bg-[#D39C9C] rounded-xl shadow p-6">
                 <h3 className="text-lg font-semibold mb-2 text-white">Catatan Admin</h3>
-                <textarea
+                {/* <textarea
                     value={noteInput}
                     onChange={(e) => setNoteInput(e.target.value)}
                     placeholder="Tambahkan catatan di sini..."
                     className="w-full p-3 border rounded-lg bg-white shadow-sm resize-none h-28 mb-2"
-                ></textarea>
-                <button
+                ></textarea> */}
+                {/* <button
                     onClick={handleAddNote}
                     className="px-4 py-2 bg-white text-[#D39C9C] rounded-md hover:bg-[#E2A8A2] transition mb-4"
                 >
@@ -120,7 +175,7 @@ export default function AdminDashboard() {
                     </ul>
                 ) : (
                     <p className="text-sm text-gray-500">Belum ada catatan.</p>
-                )}
+                )} */}
             </div>
         </div>
     );

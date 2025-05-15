@@ -4,12 +4,8 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 async function listTransaksi() {
   const data = await sql`
-    SELECT 
-      produk, 
-      pembeli, 
-      tanggal
-    FROM transaksi
-    ORDER BY tanggal DESC;
+    SELECT *
+    FROM produk;
   `;
   return data;
 }
