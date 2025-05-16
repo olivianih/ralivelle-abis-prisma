@@ -2,24 +2,26 @@
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
-export type Produk = {
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  price: string;
-};
-
-export type Transaksi = {
-  id: number;
-  produk: string;
-  pembeli: string;
-  tanggal: string;
+export type produk = {
+  id_produk: number;
+  nama_produk: string;
+  harga: string;
+  foto: string;
+  deskripsi: string;
+  id_kategori: string;
 };
 
 export type supplier = {
   id_supplier: string;
   nama_supplier: string;
-  nomor_telepon :string;
+  nomor_telepon: string;
   alamat: string;
 }
+
+export type transaksi = {
+  id_transaksi: string;
+  id_produk: string;
+  nama_pelanggan: string;
+  tanggal_transaksi: string;
+  total_harga: string;
+};

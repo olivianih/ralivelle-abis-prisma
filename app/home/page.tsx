@@ -1,14 +1,10 @@
-'use client';
-
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import ProductCard from '@/app/components/ProductCard';
-import { dummyProducts } from '@/app/lib/placeholder-data';
-import { useRouter } from 'next/navigation';
+import { ProductCard } from '@/app/components/ProductCard';
+import { fetchProduk } from '../lib/data';
 
-export default function HomePage() {
-  const bestSellerProducts = dummyProducts.slice(0, 3);
-  const router = useRouter();
+export default async function HomePage() {
+  const products = await fetchProduk();
 
   return (
     <main className="flex min-h-screen flex-col p-6">
@@ -38,26 +34,28 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="mt-12">
+      <div className="mt-12 mb-12">
         <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Best Seller Ralivelle</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {bestSellerProducts.map((product) => (
-            <div
-              key={product.id}
-              onClick={() => router.push(`/shop/${product.id}`)}
-              className="cursor-pointer border rounded-xl hover:shadow-lg transition-all"
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-h-[600px] overflow-auto">
+          {products.map((product) => (
+            <Link
+              key={product.id_produk}
+              href={`/shop/${product.id_produk}`}
+              className="cursor-pointer"
             >
               <ProductCard
-                name={product.name}
-                description={product.description}
-                imageUrl={product.imageUrl}
-                price={product.price}
+                id_produk={product.id_produk}
+                nama_produk={product.nama_produk ?? ""}
+                deskripsi={product.deskripsi ?? ""}
+                foto={product.foto ?? ""}
+                harga={product.harga ?? ""}
+                id_kategori={product.id_kategori ?? ""}
               />
-            </div>
+            </Link>
           ))}
         </div>
       </div>
-    </main>
 
+    </main>
   );
 }

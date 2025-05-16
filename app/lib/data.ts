@@ -1,30 +1,31 @@
 import postgres from 'postgres';
-import {
-  Produk,
-  Transaksi,
-  // supplier,
-} from './definitions';
-import { supplier, pelanggan } from '@/generated/prisma';
-// import { formatCurrency } from './utils';
+import { supplier, pelanggan, transaksi, produk } from '@/generated/prisma';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-// export async function fetchProducts() {
-//   try {
-//     const products = await sql`
-//       SELECT id, name, description, imageUrl, price FROM products
-//     `;
-//     return products;
-//   } catch (error) {
-//     console.error('Database Error:', error);
-//     throw new Error('Failed to fetch products.');
-//   }
-// }
+export async function fetchProduk() {
+  try {
+
+    console.log('Fetching produk data...');
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    const data = await sql<produk[]>`
+    SELECT *
+    FROM produk`;
+
+    console.log('Data fetch berhasil.');
+
+    return data;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch products.');
+  }
+}
 
 export async function fetchSupplier() {
   try {
 
-    console.log('Fetching produk data...');
+    console.log('Fetching supplier data...');
     await new Promise((resolve) => setTimeout(resolve, 1000))
 
     const data = await sql<supplier[]>`
@@ -37,7 +38,7 @@ export async function fetchSupplier() {
     return data;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch products.');
+    throw new Error('Failed to fetch supplier.');
   }
 }
 
@@ -60,6 +61,80 @@ export async function fetchPelanggan() {
     throw new Error('Failed to fetch pelanggan.');
   }
 }
+
+export async function fetchTransaksi() {
+  try {
+
+    console.log('Fetching transaksi data...');
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    const data = await sql<transaksi[]>`
+    SELECT *
+    FROM transaksi`;
+
+    console.log('Data fetch berhasil.');
+
+    return data;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch transaksi.');
+  }
+}
+
+// export async function addTransaksi(data: {
+//   id_transaksi: string;
+//   id_produk: string;
+//   nama_pelanggan: string;
+//   tanggal_transaksi: string;
+//   total_harga: string;
+// }) {
+//   try {
+//     await sql`
+//       INSERT INTO transaksi (
+//         id_transaksi, id_produk, nama_pelanggan, tanggal_transaksi, total_harga
+//       ) VALUES (
+//         ${data.id_transaksi}, ${data.id_produk}, ${data.nama_pelanggan}, ${data.tanggal_transaksi}, ${data.total_harga}
+//       )
+//     `;
+//   } catch (error) {
+//     console.error('Gagal menambah transaksi:', error);
+//     throw new Error('Gagal menambah transaksi.');
+//   }
+// }
+
+// export async function editTransaksi(data: {
+//   id_transaksi: string;
+//   id_produk: string;
+//   nama_pelanggan: string;
+//   tanggal_transaksi: string;
+//   total_harga: string;
+// }) {
+//   try {
+//     await sql`
+//       UPDATE transaksi SET
+//         id_produk = ${data.id_produk},
+//         nama_pelanggan = ${data.nama_pelanggan},
+//         tanggal_transaksi = ${data.tanggal_transaksi},
+//         total_harga = ${data.total_harga}
+//       WHERE id_transaksi = ${data.id_transaksi}
+//     `;
+//   } catch (error) {
+//     console.error('Gagal mengedit transaksi:', error);
+//     throw new Error('Gagal mengedit transaksi.');
+//   }
+// }
+
+// export async function deleteTransaksi(id_transaksi: string) {
+//   try {
+//     await sql`
+//       DELETE FROM transaksi
+//       WHERE id_transaksi = ${id_transaksi}
+//     `;
+//   } catch (error) {
+//     console.error('Gagal menghapus transaksi:', error);
+//     throw new Error('Gagal menghapus transaksi.');
+//   }
+// }
 
 // export async function fetchCardData() {
 //   try {

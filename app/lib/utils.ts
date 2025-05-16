@@ -1,4 +1,6 @@
 // // import { Revenue } from './definitions';
+import { produk } from '@/generated/prisma';
+import type { transaksi } from './definitions';
 
 // export const formatCurrency = (amount: number) => {
 //   return (amount / 100).toLocaleString('en-US', {
@@ -34,6 +36,55 @@
 
 //   return { yAxisLabels, topLabel };
 // };
+
+export const generateYAxis = (counts: number[]) => {
+  const yAxisLabels = [];
+  const highest = Math.max(...counts);
+  const topLabel = Math.ceil(highest / 5) * 5;
+
+  for (let i = topLabel; i >= 0; i -= 1) {
+    yAxisLabels.push(i.toString());
+  }
+
+  return { yAxisLabels, topLabel };
+};
+
+export function getJumlahTransaksi(data: transaksi[]): number {
+  return data.length;
+};
+
+export function getJumlahTransaksiPerBulan(transaksi: transaksi[]) {
+  const bulanMap = new Map<string, number>();
+
+  for (const t of transaksi) {
+    const bulan = t.tanggal_transaksi.slice(0, 7);
+    bulanMap.set(bulan, (bulanMap.get(bulan) ?? 0) + 1);
+  }
+
+  const chartData = Array.from(bulanMap.entries()).map(([month, count]) => ({
+    month,
+    jumlah: count,
+  }));
+
+  chartData.sort((a, b) => a.month.localeCompare(b.month));
+
+  return chartData;
+}
+
+// export function getJumlahProduk(data: produk[]) {
+//   const jumlahPerProduk: { [produkId: string]: number } = {};
+
+//   data.forEach((item) => {
+//     const id = item.id_produk;
+//     if (jumlahPerProduk[id]) {
+//       jumlahPerProduk[id] += 1;
+//     } else {
+//       jumlahPerProduk[id] = 1;
+//     }
+//   });
+
+//   return jumlahPerProduk;
+// }
 
 // export const generatePagination = (currentPage: number, totalPages: number) => {
 //   // If the total number of pages is 7 or less,

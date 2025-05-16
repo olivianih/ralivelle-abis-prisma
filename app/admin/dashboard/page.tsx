@@ -2,7 +2,9 @@
 
 // import { useEffect, useState } from 'react';
 import { dummyProducts, penjualanBulanan } from '@/app/lib/placeholder-data';
-import { fetchSupplier, fetchPelanggan } from '@/app/lib/data';
+import { fetchSupplier, fetchPelanggan, fetchTransaksi } from '@/app/lib/data';
+import PenjualanChart from '@/app/components/PenjualanChart';
+import { getJumlahTransaksi } from '@/app/lib/utils';
 
 export default async function AdminDashboard() {
     // const [currentTime, setCurrentTime] = useState('');
@@ -11,9 +13,13 @@ export default async function AdminDashboard() {
     // const [notes, setNotes] = useState<string[]>([]);
     const supplier = await fetchSupplier();
     const pelanggan = await fetchPelanggan();
+    
+    const transaksi = await fetchTransaksi();
+    const totalTransaksi = getJumlahTransaksi(transaksi);
 
     const totalProduk = dummyProducts.length;
-    const totalTransaksi = 75;
+
+    const currentTime = new Date().toLocaleTimeString();
 
     // useEffect(() => {
     //     if (typeof window !== 'undefined') {
@@ -45,7 +51,7 @@ export default async function AdminDashboard() {
     return (
         <div className="min-h-screen p-8 font-sans bg-[#F8F5F2] overflow-hidden">
             <h1 className="text-3xl font-bold text-[#D39C9C] mb-1">Dashboard Admin</h1>
-            {/* <p className="text-gray-600 mb-6 text-base md:text-lg">Hai, <span className="font-semibold">{adminName}</span> 👋 Semangat bekerja hari ini!</p> */}
+            <p className="text-gray-600 mb-6 text-base md:text-lg">Hai, <span className="font-semibold">admin123</span> 👋 Semangat bekerja hari ini!</p>
 
             <div className="bg-gradient-to-r from-[#FFD5C2] to-[#FBE2DD] rounded-xl shadow p-6 flex items-center justify-center mb-6 w-full">
                 <blockquote className="text-center text-[#D39C9C] italic text-lg font-medium whitespace-normal">
@@ -54,10 +60,10 @@ export default async function AdminDashboard() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-sm">
-                {/* <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
+                <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Waktu</p>
                     <p className="text-lg font-semibold">{currentTime}</p>
-                </div> */}
+                </div>
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Total Produk</p>
                     <p className="text-lg font-bold">{totalProduk}</p>
@@ -77,23 +83,10 @@ export default async function AdminDashboard() {
             <div className="bg-white rounded-xl shadow p-6 mb-6">
                 <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Grafik Penjualan Bulanan</h2>
                 <div className="flex justify-around">
-                    {penjualanBulanan.map((item, index) => (
-                        <div key={index} className="flex flex-col items-center w-20">
-                            <div
-                                className="bg-gradient-to-t from-[#F4A698] to-[#E2676F] rounded w-full"
-                                style={{ height: `${Math.min(item.total * 3, 100)}%` }}
-                            >
-                                <div className="w-full text-center text-white font-semibold pt-2">
-                                    <span>{item.total}</span>
-                                </div>
-                            </div>
-                            <span className="text-xs md:text-sm text-gray-600 mt-2">{item.bulan}</span>
-                        </div>
-                    ))}
+                    <PenjualanChart/>
                 </div>
             </div>
 
-            {/* Tabel Supplier */}
             <div className="bg-white rounded-xl shadow p-6 mb-6">
                 <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Daftar Supplier</h2>
                 <table className="min-w-full border text-sm text-gray-700">
@@ -118,7 +111,6 @@ export default async function AdminDashboard() {
                 </table>
             </div>
 
-            {/* Tabel Pelanggan */}
             <div className="bg-white rounded-xl shadow p-6 mb-6">
                 <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Daftar Pelanggan</h2>
                 <table className="min-w-full border text-sm text-gray-700">
