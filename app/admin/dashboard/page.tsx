@@ -1,7 +1,6 @@
 // 'use client';
 
 // import { useEffect, useState } from 'react';
-import { dummyProducts, penjualanBulanan } from '@/app/lib/placeholder-data';
 import { fetchSupplier, fetchPelanggan } from '@/app/lib/data';
 
 export default async function AdminDashboard() {
@@ -12,7 +11,6 @@ export default async function AdminDashboard() {
     const supplier = await fetchSupplier();
     const pelanggan = await fetchPelanggan();
 
-    const totalProduk = dummyProducts.length;
     const totalTransaksi = 75;
 
     // useEffect(() => {
@@ -60,7 +58,7 @@ export default async function AdminDashboard() {
                 </div> */}
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Total Produk</p>
-                    <p className="text-lg font-bold">{totalProduk}</p>
+                    <p className="text-lg font-bold">{}</p>
                 </div>
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Total Transaksi</p>
@@ -77,7 +75,7 @@ export default async function AdminDashboard() {
             <div className="bg-white rounded-xl shadow p-6 mb-6">
                 <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Grafik Penjualan Bulanan</h2>
                 <div className="flex justify-around">
-                    {penjualanBulanan.map((item, index) => (
+                    {/* {penjualanBulanan.map((item, index) => (
                         <div key={index} className="flex flex-col items-center w-20">
                             <div
                                 className="bg-gradient-to-t from-[#F4A698] to-[#E2676F] rounded w-full"
@@ -89,7 +87,7 @@ export default async function AdminDashboard() {
                             </div>
                             <span className="text-xs md:text-sm text-gray-600 mt-2">{item.bulan}</span>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             </div>
 
