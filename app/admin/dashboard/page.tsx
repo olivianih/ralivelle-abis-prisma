@@ -1,10 +1,12 @@
 // 'use client';
 
 // import { useEffect, useState } from 'react';
-import { dummyProducts, penjualanBulanan } from '@/app/lib/placeholder-data';
-import { fetchSupplier, fetchPelanggan, fetchTransaksi } from '@/app/lib/data';
+// import { dummyProducts, penjualanBulanan } from '@/app/lib/placeholder-data';
+import { fetchSupplier, fetchPelanggan, fetchTransaksi, fetchProduk } from '@/app/lib/data';
 import PenjualanChart from '@/app/components/PenjualanChart';
-import { getJumlahTransaksi } from '@/app/lib/utils';
+import { getJumlahTransaksi, getJumlahProduk, getTotalRevenue, getBestSeller } from '@/app/lib/utils';
+
+import RevenueChart from '@/app/components/RevenueChart';
 
 export default async function AdminDashboard() {
     // const [currentTime, setCurrentTime] = useState('');
@@ -13,13 +15,20 @@ export default async function AdminDashboard() {
     // const [notes, setNotes] = useState<string[]>([]);
     const supplier = await fetchSupplier();
     const pelanggan = await fetchPelanggan();
-    
+
     const transaksi = await fetchTransaksi();
     const totalTransaksi = getJumlahTransaksi(transaksi);
 
-    const totalProduk = dummyProducts.length;
+    const revenue = await fetchTransaksi();
+    const totalRevenue = await getTotalRevenue(revenue);
 
-    const currentTime = new Date().toLocaleTimeString();
+    const produk = await fetchProduk();
+    const totalProduk = getJumlahProduk(produk);
+
+    const bestSeller = await fetchTransaksi();
+    const bestSellerCard = getBestSeller(bestSeller);
+
+    // const currentTime = new Date().toLocaleTimeString();
 
     // useEffect(() => {
     //     if (typeof window !== 'undefined') {
@@ -61,8 +70,8 @@ export default async function AdminDashboard() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 text-sm">
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
-                    <p className="text-gray-200">Waktu</p>
-                    <p className="text-lg font-semibold">{currentTime}</p>
+                    <p className="text-gray-200">Best Seller</p>
+                    <p className="text-lg font-semibold">{bestSellerCard.id_produk}</p>
                 </div>
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Total Produk</p>
@@ -74,18 +83,28 @@ export default async function AdminDashboard() {
                 </div>
 
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
-                    <p className="text-gray-200">Keterangan</p>
-                    <p className="text-lg font-semibold">Toko Berjalan Lancar!</p>
+                    <p className="text-gray-200">Total Revenue</p>
+                    <p className="text-lg font-semibold">{totalRevenue}</p>
                 </div>
             </div>
 
 
-            <div className="bg-white rounded-xl shadow p-6 mb-6">
-                <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Grafik Penjualan Bulanan</h2>
-                <div className="flex justify-around">
-                    <PenjualanChart/>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="bg-white rounded-xl shadow p-6">
+                    <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Grafik Jumlah Transaksi Bulanan</h2>
+                    <div className="flex justify-center">
+                        <PenjualanChart />
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-xl shadow p-6">
+                    <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Grafik Revenue Bulanan</h2>
+                    <div className="flex justify-center">
+                        <RevenueChart />
+                    </div>
                 </div>
             </div>
+
 
             <div className="bg-white rounded-xl shadow p-6 mb-6">
                 <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Daftar Supplier</h2>
@@ -139,19 +158,20 @@ export default async function AdminDashboard() {
 
             <div className="bg-[#D39C9C] rounded-xl shadow p-6">
                 <h3 className="text-lg font-semibold mb-2 text-white">Catatan Admin</h3>
-                {/* <textarea
-                    value={noteInput}
-                    onChange={(e) => setNoteInput(e.target.value)}
+                <textarea
+                    id="catatan"
+                    name="catatan"
                     placeholder="Tambahkan catatan di sini..."
                     className="w-full p-3 border rounded-lg bg-white shadow-sm resize-none h-28 mb-2"
-                ></textarea> */}
-                {/* <button
-                    onClick={handleAddNote}
-                    className="px-4 py-2 bg-white text-[#D39C9C] rounded-md hover:bg-[#E2A8A2] transition mb-4"
+                // disabled
+                ></textarea>
+                <button
+                    // onClick={handleAddNote}
+                    className="px-4 py-2 bg-white text-[#D39C9C] rounded-md hover:bg-green-400 transition mb-4"
                 >
                     Simpan Catatan
                 </button>
-                {notes.length > 0 ? (
+                {/* {notes.length > 0 ? (
                     <ul className="space-y-2">
                         {notes.map((note, index) => (
                             <li key={index} className="flex justify-between items-center bg-gray-100 rounded-lg p-3">
@@ -167,7 +187,7 @@ export default async function AdminDashboard() {
                     </ul>
                 ) : (
                     <p className="text-sm text-gray-500">Belum ada catatan.</p>
-                )} */}
+                )} } */}
             </div>
         </div>
     );

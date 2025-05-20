@@ -1,40 +1,68 @@
 import { fetchProduk } from "@/app/lib/data";
-import { ProductCard } from "@/app/components/ProductCard";
 import Breadcrumbs from "@/app/components/Breadcrumbs";
 import Link from "next/link";
 
 export default async function ShopPage() {
     const products = await fetchProduk();
 
+  // Server action untuk handle delete
+  // async function handleDelete(data: FormData) {
+  //   "use server";
+  //   const id_produk = data.get("id_produk");
+  //   if (typeof id_produk === "string") {
+  //     await deleteProduct(Number(id_produk));
+  //   }
+  // }
+
     return (
         <section className="p-6">
-            <div>
                 <Breadcrumbs
                     breadcrumbs={[
                         { label: "Ralivelle", href: "/home" },
-                        { label: "Shop", href: "/shop", active: true },
+          { label: "Katalog Produk", href: "/shop", active: true },
                     ]}
                 />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-6 overflow-x-auto">
+      <h1 className="text-2xl font-bold mt-6">Katalog Produk</h1>
+      <div className="overflow-x-auto mt-4">
+        <table className="min-w-full border border-gray-300 rounded-lg">
+          <thead className="bg-[#ECD3DB]">
+            <tr>
+              <th className="px-4 py-2 border-b">ID Produk</th>
+              <th className="px-4 py-2 border-b">Nama Produk</th>
+              <th className="px-4 py-2 border-b">Deskripsi</th>
+              <th className="px-4 py-2 border-b">Harga</th>
+              <th className="px-4 py-2 border-b">ID Kategori</th>
+              <th className="px-4 py-2 border-b">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
                 {products.map((product) => (
-                    <Link
-                        key={product.id_produk}
-                        href={`/shop/${product.id_produk}`}
-                        className="cursor-pointer"
+              <tr key={product.id_produk} className="hover:bg-gray-50">
+                <td className="px-4 py-2 border-b text-center">{product.id_produk}</td>
+                <td className="px-4 py-2 border-b">{product.nama_produk}</td>
+                <td className="px-4 py-2 border-b">{product.deskripsi}</td>
+                <td className="px-4 py-2 border-b text-right">
+                  Rp {product.harga}
+                </td>
+                <td className="px-4 py-2 border-b text-center">{product.id_kategori}</td>
+                <td className="px-4 py-2 border-b text-center space-x-2">
+                  <Link href={`/shop/edit/${product.id_produk}`} className="text-blue-600 hover:underline">
+                    Edit
+                  </Link>
+                  <form action={""} className="inline">
+                    <input type="hidden" name="id_produk" value={product.id_produk} />
+                    <button
+                      type="submit"
+                      className="text-red-600 hover:underline cursor-pointer bg-transparent border-none p-0"
                     >
-                        <ProductCard
-                            id_produk={product.id_produk}
-                            nama_produk={product.nama_produk ?? ""}
-                            deskripsi={product.deskripsi ?? ""}
-                            foto={product.foto ?? ""}
-                            harga={product.harga ?? ""}
-                            id_kategori={product.id_kategori ?? ""}
-                        />
-                    </Link>
+                      Hapus
+                    </button>
+                  </form>
+                </td>
+              </tr>
                 ))}
-
+          </tbody>
+        </table>
             </div>
         </section>
     );

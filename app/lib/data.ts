@@ -17,10 +17,21 @@ export async function fetchProduk() {
 
     return data;
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch products.');
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch products.");
   }
 }
+
+// export async function deleteProduct(id_produk: number) {
+//   try {
+//     await sql`
+//       DELETE FROM produk WHERE id_produk = ${id_produk}
+//     `;
+//   } catch (error) {
+//     console.error("Database Error:", error);
+//     throw new Error("Failed to delete product.");
+//   }
+// }
 
 export async function fetchSupplier() {
   try {

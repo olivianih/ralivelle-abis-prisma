@@ -37,6 +37,14 @@ import type { transaksi } from './definitions';
 //   return { yAxisLabels, topLabel };
 // };
 
+export function getJumlahTransaksi(data: transaksi[]): number {
+  return data.length;
+};
+
+export function getJumlahProduk(data: produk[]): number {
+  return data.length;
+};
+
 export const generateYAxis = (counts: number[]) => {
   const yAxisLabels = [];
   const highest = Math.max(...counts);
@@ -47,10 +55,6 @@ export const generateYAxis = (counts: number[]) => {
   }
 
   return { yAxisLabels, topLabel };
-};
-
-export function getJumlahTransaksi(data: transaksi[]): number {
-  return data.length;
 };
 
 export function getJumlahTransaksiPerBulan(transaksi: transaksi[]) {
@@ -69,6 +73,69 @@ export function getJumlahTransaksiPerBulan(transaksi: transaksi[]) {
   chartData.sort((a, b) => a.month.localeCompare(b.month));
 
   return chartData;
+}
+
+export function getRevenuePerBulan(transaksi: transaksi[]) {
+  const bulanMap = new Map<string, number>();
+
+  for (const t of transaksi) {
+    const bulan = t.tanggal_transaksi.slice(0, 7)
+
+    const hargaBersih = Number(
+      t.total_harga.replace(/[Rp.]/g, "").trim()
+    );
+
+    bulanMap.set(bulan, (bulanMap.get(bulan) ?? 0) + hargaBersih);
+  }
+
+  const chartData = Array.from(bulanMap.entries()).map(([month, total]) => ({
+    month,
+    total,
+  }));
+
+  chartData.sort((a, b) => a.month.localeCompare(b.month));
+
+  return chartData;
+}
+
+export function getTotalRevenue(transaksi: transaksi[]): number {
+  let total = 0;
+
+  for (const t of transaksi) {
+    const hargaBersih = Number(
+      t.total_harga.replace(/[Rp.]/g, "").trim()
+    );
+
+    if (!isNaN(hargaBersih)) {
+      total += hargaBersih;
+    }
+  }
+
+  return total;
+}
+
+
+export function getBestSeller(transaksi: transaksi[]) {
+  const produkCountMap = new Map<string, number>();
+
+  for (const t of transaksi) {
+    const id = t.id_produk;
+    if (!id) continue;
+    produkCountMap.set(id, (produkCountMap.get(id) ?? 0) + 1);
+  }
+
+  // Cari produk dengan jumlah terbanyak
+  let bestId = '';
+  let max = 0;
+
+  for (const [id, jumlah] of produkCountMap.entries()) {
+    if (jumlah > max) {
+      bestId = id;
+      max = jumlah;
+    }
+  }
+
+  return { id_produk: bestId, jumlah: max };
 }
 
 // export function getJumlahProduk(data: produk[]) {
