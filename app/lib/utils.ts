@@ -124,7 +124,6 @@ export function getBestSeller(transaksi: transaksi[]) {
     produkCountMap.set(id, (produkCountMap.get(id) ?? 0) + 1);
   }
 
-  // Cari produk dengan jumlah terbanyak
   let bestId = '';
   let max = 0;
 

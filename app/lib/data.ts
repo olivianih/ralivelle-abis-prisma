@@ -36,8 +36,8 @@ export async function fetchProduk() {
 export async function fetchSupplier() {
   try {
 
-    console.log('Fetching supplier data...');
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    // console.log('Fetching supplier data...');
+    // await new Promise((resolve) => setTimeout(resolve, 1000))
 
     const data = await sql<supplier[]>`
     SELECT *
@@ -56,8 +56,8 @@ export async function fetchSupplier() {
 export async function fetchPelanggan() {
   try {
 
-    console.log('Fetching pelanggan data...');
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    // console.log('Fetching pelanggan data...');
+    // await new Promise((resolve) => setTimeout(resolve, 1000))
 
     const data = await sql<pelanggan[]>`
     SELECT *
@@ -76,8 +76,8 @@ export async function fetchPelanggan() {
 export async function fetchTransaksi() {
   try {
 
-    console.log('Fetching transaksi data...');
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    // console.log('Fetching transaksi data...');
+    // await new Promise((resolve) => setTimeout(resolve, 1000))
 
     const data = await sql<transaksi[]>`
     SELECT *

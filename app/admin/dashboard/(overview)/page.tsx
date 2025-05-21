@@ -3,10 +3,12 @@
 // import { useEffect, useState } from 'react';
 // import { dummyProducts, penjualanBulanan } from '@/app/lib/placeholder-data';
 import { fetchSupplier, fetchPelanggan, fetchTransaksi, fetchProduk } from '@/app/lib/data';
+import RevenueChart from '@/app/components/RevenueChart';
 import PenjualanChart from '@/app/components/PenjualanChart';
 import { getJumlahTransaksi, getJumlahProduk, getTotalRevenue, getBestSeller } from '@/app/lib/utils';
 
-import RevenueChart from '@/app/components/RevenueChart';
+import { Suspense } from 'react';
+import { PenjualanChartSkeleton, RevenueChartSkeleton } from '@/app/ui/skeletonDashboard';
 
 export default async function AdminDashboard() {
     // const [currentTime, setCurrentTime] = useState('');
@@ -81,26 +83,28 @@ export default async function AdminDashboard() {
                     <p className="text-gray-200">Total Transaksi</p>
                     <p className="text-lg font-bold">{totalTransaksi}</p>
                 </div>
-
                 <div className="bg-[#D39C9C] rounded-xl shadow p-3 text-center text-white hover:shadow-md transition">
                     <p className="text-gray-200">Total Revenue</p>
                     <p className="text-lg font-semibold">{totalRevenue}</p>
                 </div>
             </div>
 
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="bg-white rounded-xl shadow p-6">
                     <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Grafik Jumlah Transaksi Bulanan</h2>
                     <div className="flex justify-center">
-                        <PenjualanChart />
+                        <Suspense fallback={<PenjualanChartSkeleton />}>
+                            <PenjualanChart />
+                        </Suspense>
                     </div>
                 </div>
 
                 <div className="bg-white rounded-xl shadow p-6">
                     <h2 className="text-xl font-bold text-[#D39C9C] mb-4">Grafik Revenue Bulanan</h2>
                     <div className="flex justify-center">
-                        <RevenueChart />
+                        <Suspense fallback={<RevenueChartSkeleton />}>
+                            <RevenueChart />
+                        </Suspense>
                     </div>
                 </div>
             </div>
