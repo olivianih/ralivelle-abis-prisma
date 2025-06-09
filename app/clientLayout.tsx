@@ -20,9 +20,9 @@ export default function ClientLayoutWrapper({ children }: { children: React.Reac
   }, [isLoginPage, isRegisterPage, isForgotPasswordPage]);
 
   return (
-    <div className={`min-h-screen flex flex-col ${isLoginPage || isRegisterPage || isForgotPasswordPage ? '' : 'overflow-auto'}`}>
+    <div className={`ml-64min-h-screen flex flex-col ${isLoginPage || isRegisterPage || isForgotPasswordPage ? '' : 'overflow-auto'}`}>
       {!isLoginPage && !isRegisterPage && !isForgotPasswordPage && <Navbar />}
-      <main className={`flex-grow ${!isLoginPage && !isRegisterPage && !isForgotPasswordPage ? 'mt-16 p-6' : ''}`}>
+      <main className={`flex-grow  ${!isLoginPage && !isRegisterPage && !isForgotPasswordPage ? 'mt-16 p-6' : ''}`}>
         {children}
       </main>
       {!isLoginPage && !isRegisterPage && !isForgotPasswordPage && <Footer />}

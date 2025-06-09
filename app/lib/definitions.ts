@@ -11,6 +11,17 @@ export type produk = {
   id_kategori: string;
 };
 
+export type produkField = {
+  id_produk: number;
+  nama_produk: string;
+}
+
+export type kategoriField = {
+  id_kategori: string;
+  nama_kategori: string;
+};
+
+
 export type supplier = {
   id_supplier: string;
   nama_supplier: string;

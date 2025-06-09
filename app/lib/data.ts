@@ -3,49 +3,57 @@ import { supplier, pelanggan, transaksi, produk } from '@/generated/prisma';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-export async function fetchProduk() {
+export async function fetchProduk(query?: string) {
   try {
-
     console.log('Fetching produk data...');
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const data = await sql<produk[]>`
-    SELECT *
-    FROM produk`;
+    let data;
+    if (query && query.trim() !== '') {
+      data = await sql<produk[]>`
+        SELECT * FROM produk
+        WHERE nama_produk ILIKE ${`%${query}%`}
+      `;
+    } else {
+      data = await sql<produk[]>`
+        SELECT * FROM produk
+      `;
+    }
 
     console.log('Data fetch berhasil.');
-
     return data;
   } catch (error) {
-    console.error("Database Error:", error);
-    throw new Error("Failed to fetch products.");
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch products.');
   }
 }
 
-// export async function deleteProduct(id_produk: number) {
-//   try {
-//     await sql`
-//       DELETE FROM produk WHERE id_produk = ${id_produk}
-//     `;
-//   } catch (error) {
-//     console.error("Database Error:", error);
-//     throw new Error("Failed to delete product.");
-//   }
-// }
+export async function fetchProdukById(id: string) {
+  const data = await sql`SELECT * FROM produk WHERE id_produk = ${id}`;
+  return data[0];
+}
+
+export async function deleteProduct(id_produk: number) {
+  try {
+    console.log(`Deleting product with id_produk = ${id_produk}`);
+    await sql`
+      DELETE FROM produk WHERE id_produk = ${id_produk}
+    `;
+    console.log("Delete successful.");
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to delete product.");
+  }
+}
 
 export async function fetchSupplier() {
   try {
-
-    // console.log('Fetching supplier data...');
-    // await new Promise((resolve) => setTimeout(resolve, 1000))
-
     const data = await sql<supplier[]>`
-    SELECT *
-    FROM supplier
-    ORDER BY nama_supplier ASC`;
+      SELECT * FROM supplier
+      ORDER BY nama_supplier ASC
+    `;
 
     console.log('Data fetch berhasil.');
-
     return data;
   } catch (error) {
     console.error('Database Error:', error);
@@ -55,17 +63,12 @@ export async function fetchSupplier() {
 
 export async function fetchPelanggan() {
   try {
-
-    // console.log('Fetching pelanggan data...');
-    // await new Promise((resolve) => setTimeout(resolve, 1000))
-
     const data = await sql<pelanggan[]>`
-    SELECT *
-    FROM pelanggan
-    ORDER BY nama ASC`;
+      SELECT * FROM pelanggan
+      ORDER BY nama ASC
+    `;
 
     console.log('Data fetch berhasil.');
-
     return data;
   } catch (error) {
     console.error('Database Error:', error);
@@ -73,18 +76,14 @@ export async function fetchPelanggan() {
   }
 }
 
-export async function fetchTransaksi() {
+
+export async function fetchTransaksi(query: string | undefined) {
   try {
-
-    // console.log('Fetching transaksi data...');
-    // await new Promise((resolve) => setTimeout(resolve, 1000))
-
     const data = await sql<transaksi[]>`
-    SELECT *
-    FROM transaksi`;
-
+      SELECT * FROM transaksi
+      ${query ? sql`WHERE nama_pelanggan ILIKE ${'%' + query + '%'}` : sql``}
+    `;
     console.log('Data fetch berhasil.');
-
     return data;
   } catch (error) {
     console.error('Database Error:', error);

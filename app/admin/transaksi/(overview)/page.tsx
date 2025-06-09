@@ -1,18 +1,26 @@
+import Search from "@/app/components/Search";
 import { fetchTransaksi } from "@/app/lib/data";
 import Link from "next/link";
 
-export default async function TransaksiPage() {
-  const transaksi = await fetchTransaksi();
+export default async function TransaksiPage({
+  searchParams,
+}: {
+  searchParams?: { query?: string };
+}) {
+  const transaksi = await fetchTransaksi(searchParams?.query);
 
   return (
     <main className="p-6 bg-white min-h-screen">
       <h1 className="text-2xl font-bold mb-4">Daftar Transaksi</h1>
 
-      <Link href="./transaksi/tambah">
-        <button className="bg-[#ECD3DB] hover:bg-[#D39C9C] text-black px-4 py-2 rounded-lg text-sm">
-          Tambah Transaksi
-        </button>
-      </Link>
+      <div className="mt-4 mb-4 flex items-center justify-between gap-2 md:mt-8">
+        <Search placeholder="Cari transaksi..." />
+        <Link href="./transaksi/tambah">
+          <button className="bg-[#ECD3DB] hover:bg-[#D39C9C] text-black px-4 py-2 rounded-lg text-sm">
+            Tambah Transaksi
+          </button>
+        </Link>
+      </div>
 
       <table className="min-w-full bg-white border rounded shadow">
         <thead>
@@ -22,7 +30,6 @@ export default async function TransaksiPage() {
             <th className="p-2">Pelanggan</th>
             <th className="p-2">Tanggal</th>
             <th className="p-2">Total</th>
-            <th className="p-2">Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -33,18 +40,7 @@ export default async function TransaksiPage() {
               <td className="p-2 text-center">{item.nama_pelanggan}</td>
               <td className="p-2 text-center">{item.tanggal_transaksi}</td>
               <td className="p-2 text-center">{item.total_harga}</td>
-              <td className="p-2 text-center space-x-2">
-                <Link href={`./transaksi/edit/${item.id_transaksi}`}>
-                  <button className="bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600">
-                    Edit
-                  </button>
-                </Link>
-                <button
-                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                >
-                  Hapus
-                </button>
-              </td>
+    
             </tr>
           ))}
         </tbody>
