@@ -61,7 +61,8 @@ export function getJumlahTransaksiPerBulan(transaksi: transaksi[]) {
   const bulanMap = new Map<string, number>();
 
   for (const t of transaksi) {
-    const bulan = t.tanggal_transaksi.slice(0, 7);
+    const bulan = new Date(t.tanggal_transaksi).toISOString().slice(0, 7);
+
     bulanMap.set(bulan, (bulanMap.get(bulan) ?? 0) + 1);
   }
 
@@ -79,7 +80,8 @@ export function getRevenuePerBulan(transaksi: transaksi[]) {
   const bulanMap = new Map<string, number>();
 
   for (const t of transaksi) {
-    const bulan = t.tanggal_transaksi.slice(0, 7)
+    const date = new Date(t.tanggal_transaksi);
+    const bulan = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 
     const hargaBersih = Number(
       t.total_harga.replace(/[Rp.]/g, "").trim()
@@ -97,6 +99,7 @@ export function getRevenuePerBulan(transaksi: transaksi[]) {
 
   return chartData;
 }
+
 
 export function getTotalRevenue(transaksi: transaksi[]): number {
   let total = 0;

@@ -1,40 +1,58 @@
 'use client';
 
+import { produk_real } from '@/app/lib/definitions';
 import { Button } from '@/app/components/button';
 import { addTransaksi } from '@/app/lib/actions';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-export default function FormTambahTransaksi() {
+interface FormTambahTransaksiProps {
+    produkList: produk_real[];
+    nextId: number;
+}
+
+export default function FormTambahTransaksi({
+    produkList,
+    nextId,
+}: FormTambahTransaksiProps) {
+    const [tanggalSekarang, setTanggalSekarang] = useState('');
+
+    useEffect(() => {
+        const now = new Date().toLocaleString('id-ID', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+        setTanggalSekarang(now);
+    }, []);
+
     return (
         <form action={addTransaksi}>
             <div className="rounded-md bg-gray-50 p-4 md:p-6">
-
-                <div className="mb-4">
-                    <label htmlFor="id_transaksi" className="mb-2 block text-sm font-medium">
-                        ID Transaksi
-                    </label>
-                    <input
-                        id="id_transaksi"
-                        name="id_transaksi"
-                        type="text"
-                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
-                        placeholder="Misal: T001"
-                        required
-                    />
+                <div className="mb-4 text-sm ">
+                    <p className='mb-4 text-gray-500'><strong>ID Transaksi:</strong> {nextId}</p>
+                    <p className='mb-4 text-gray-500'>{tanggalSekarang}</p>
                 </div>
 
                 <div className="mb-4">
                     <label htmlFor="id_produk" className="mb-2 block text-sm font-medium">
-                        ID Produk
+                        Produk
                     </label>
-                    <input
+                    <select
                         id="id_produk"
                         name="id_produk"
-                        type="text"
-                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
-                        placeholder="ID produk terkait"
+                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm text-gray-700"
                         required
-                    />
+                    >
+                        <option value="">-- Pilih Produk --</option>
+                        {produkList.map((p) => (
+                            <option key={p.id_produk} value={p.id_produk}>
+                                {p.id_produk} - {p.nama_produk}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="mb-4">
@@ -45,35 +63,23 @@ export default function FormTambahTransaksi() {
                         id="nama_pelanggan"
                         name="nama_pelanggan"
                         type="text"
-                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
                         placeholder="Nama pelanggan"
-                        required
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="tanggal_transaksi" className="mb-2 block text-sm font-medium">
-                        Tanggal Transaksi
-                    </label>
-                    <input
-                        id="tanggal_transaksi"
-                        name="tanggal_transaksi"
-                        type="date"
-                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2"
+                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm"
                         required
                     />
                 </div>
 
                 <div className="mb-4">
                     <label htmlFor="total_harga" className="mb-2 block text-sm font-medium">
-                        Total Harga (Rupiah)
+                        Total Harga (Rp)
                     </label>
                     <input
                         id="total_harga"
                         name="total_harga"
-                        type="text"
-                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
-                        placeholder="Contoh: 50000"
+                        type="number"
+                        min="0"
+                        placeholder="10000"
+                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm"
                         required
                     />
                 </div>

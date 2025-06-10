@@ -38,9 +38,16 @@ export default async function TransaksiPage({
               <td className="p-2 text-center">{item.id_transaksi}</td>
               <td className="p-2 text-center">{item.id_produk}</td>
               <td className="p-2 text-center">{item.nama_pelanggan}</td>
-              <td className="p-2 text-center">{item.tanggal_transaksi}</td>
+              <td className="p-2 text-center">
+                {new Date(item.tanggal_transaksi).toLocaleDateString("id-ID", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </td>
+
               <td className="p-2 text-center">{item.total_harga}</td>
-    
+
             </tr>
           ))}
         </tbody>

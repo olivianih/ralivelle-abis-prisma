@@ -30,35 +30,6 @@ export default async function AdminDashboard() {
     const bestSeller = await fetchTransaksi();
     const bestSellerCard = getBestSeller(bestSeller);
 
-    // const currentTime = new Date().toLocaleTimeString();
-
-    // useEffect(() => {
-    //     if (typeof window !== 'undefined') {
-    //         const interval = setInterval(() => {
-    //             const now = new Date();
-    //             setCurrentTime(now.toLocaleTimeString());
-    //         }, 1000);
-
-    //         const username = localStorage.getItem('username');
-    //         if (username) setAdminName(username);
-
-    //         return () => clearInterval(interval);
-    //     }
-    // }, []);
-
-    // const handleAddNote = () => {
-    //     if (noteInput.trim() !== '') {
-    //         setNotes([...notes, noteInput.trim()]);
-    //         setNoteInput('');
-    //     }
-    // };
-
-    // const handleDeleteNote = (index: number) => {
-    //     const updatedNotes = [...notes];
-    //     updatedNotes.splice(index, 1);
-    //     setNotes(updatedNotes);
-    // };
-
     return (
         <div className="min-h-screen p-8 font-sans bg-[#F8F5F2] overflow-hidden">
             <h1 className="text-3xl font-bold text-[#D39C9C] mb-1">Dashboard Admin</h1>

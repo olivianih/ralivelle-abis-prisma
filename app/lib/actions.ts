@@ -16,11 +16,11 @@ const ProductSchema = z.object({
 });
 
 const TransaksiSchema = z.object({
-  id_transaksi: z.string(),
+  // id_transaksi: z.string(),
   id_produk: z.string(),
   nama_pelanggan: z.string(),
-  tanggal_transaksi: z.string(),
-  total_harga: z.string(),
+  // tanggal_transaksi: z.string(),
+  total_harga: z.coerce.string(),
 });
 
 const AddProductSchema = ProductSchema;
@@ -44,7 +44,7 @@ export async function addProduct(formData: FormData) {
   INSERT INTO produk_real (nama_produk, deskripsi, harga, id_kategori)
   VALUES (${nama_produk}, ${deskripsi}, ${harga}, 1)
 `;
-  
+
 
   revalidatePath('/admin/produk');
   redirect('/admin/produk');
@@ -87,23 +87,35 @@ export async function deleteProduct(id: string) {
 
 export async function addTransaksi(formData: FormData) {
   const {
-    id_transaksi,
+    // id_transaksi,
     id_produk,
     nama_pelanggan,
-    tanggal_transaksi,
+    // tanggal_transaksi,
     total_harga,
   } = AddTransaksiSchema.parse({
-    id_transaksi: formData.get('id_transaksi'),
+    // id_transaksi: formData.get('id_transaksi'),
     id_produk: formData.get('id_produk'),
     nama_pelanggan: formData.get('nama_pelanggan'),
-    tanggal_transaksi: formData.get('tanggal_transaksi'),
+    // tanggal_transaksi: formData.get('tanggal_transaksi'),
     total_harga: formData.get('total_harga'),
   });
 
+  const tanggal_transaksi = new Date().toLocaleString();
+
   await sql`
-    INSERT INTO transaksi (id_transaksi, id_produk, nama_pelanggan, tanggal_transaksi, total_harga)
-    VALUES (${id_transaksi}, ${id_produk}, ${nama_pelanggan}, ${tanggal_transaksi}, ${total_harga})
-  `;
+  INSERT INTO transaksi_real (
+    id_produk,
+    nama_pelanggan,
+    tanggal_transaksi,
+    total_harga
+  )
+  VALUES (
+    ${id_produk},
+    ${nama_pelanggan},
+    ${tanggal_transaksi},
+    ${total_harga}
+  )
+`;
 
   revalidatePath('/admin/transaksi');
   redirect('/admin/transaksi');

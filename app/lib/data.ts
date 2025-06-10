@@ -1,6 +1,6 @@
 import postgres from 'postgres';
 import { supplier, pelanggan, transaksi, produk } from '@/generated/prisma';
-import { produk_real, kategori_real } from './definitions';
+import { produk_real, kategori_real, transaksi_real } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -96,8 +96,8 @@ export async function fetchPelanggan() {
 
 export async function fetchTransaksi(query: string | undefined) {
   try {
-    const data = await sql<transaksi[]>`
-      SELECT * FROM transaksi
+    const data = await sql<transaksi_real[]>`
+      SELECT * FROM transaksi_real
       ${query ? sql`WHERE nama_pelanggan ILIKE ${'%' + query + '%'}` : sql``}
     `;
     console.log('Data fetch berhasil.');

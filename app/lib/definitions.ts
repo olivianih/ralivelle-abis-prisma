@@ -57,3 +57,11 @@ export type transaksi = {
   tanggal_transaksi: string;
   total_harga: string;
 };
+
+export type transaksi_real = {
+  id_transaksi: number;
+  id_produk: number;
+  nama_pelanggan: string;
+  tanggal_transaksi: string;
+  total_harga: number;
+};
