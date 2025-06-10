@@ -1,6 +1,6 @@
 // // import { Revenue } from './definitions';
 import { produk } from '@/generated/prisma';
-import type { transaksi } from './definitions';
+import type { produk_real, transaksi } from './definitions';
 
 // export const formatCurrency = (amount: number) => {
 //   return (amount / 100).toLocaleString('en-US', {
@@ -41,7 +41,7 @@ export function getJumlahTransaksi(data: transaksi[]): number {
   return data.length;
 };
 
-export function getJumlahProduk(data: produk[]): number {
+export function getJumlahProduk(data: produk_real[]): number {
   return data.length;
 };
 

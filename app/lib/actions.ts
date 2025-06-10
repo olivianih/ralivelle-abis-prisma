@@ -8,19 +8,19 @@ import postgres from 'postgres';
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 const ProductSchema = z.object({
-    id_produk: z.coerce.number(),
-    nama_produk: z.string(),
-    deskripsi: z.string(),
-    harga: z.string(),
-    id_kategori: z.string(),
+  // id_produk: z.coerce.number(),
+  nama_produk: z.string(),
+  deskripsi: z.string(),
+  harga: z.coerce.number(),
+  id_kategori: z.coerce.number(),
 });
 
 const TransaksiSchema = z.object({
   id_transaksi: z.string(),
   id_produk: z.string(),
   nama_pelanggan: z.string(),
-  tanggal_transaksi: z.string(), 
-  total_harga: z.string(),       
+  tanggal_transaksi: z.string(),
+  total_harga: z.string(),
 });
 
 const AddProductSchema = ProductSchema;
@@ -30,27 +30,30 @@ const AddTransaksiSchema = TransaksiSchema;
 
 
 export async function addProduct(formData: FormData) {
-    const { id_produk, nama_produk, deskripsi, harga, id_kategori } = AddProductSchema.parse({
-        id_produk: formData.get('id_produk'),
-        nama_produk: formData.get('nama_produk'),
-        deskripsi: formData.get('deskripsi'),
-        harga: formData.get('harga'),
-        id_kategori: formData.get('kategori'),
-    });
+  const { nama_produk, deskripsi, harga, id_kategori } = AddProductSchema.parse({
 
-    await sql`
-    INSERT INTO produk (id_produk, nama_produk, deskripsi, harga, id_kategori)
-    VALUES (${id_produk}, ${nama_produk}, ${deskripsi}, ${harga}, ${id_kategori})
-  `;
+    nama_produk: formData.get('nama_produk'),
+    deskripsi: formData.get('deskripsi'),
+    harga: formData.get('harga'),
+    id_kategori: formData.get('kategori'),
+  });
 
-    revalidatePath('/admin/produk');
-    redirect('/admin/produk');
+  console.log("Inserting product with category:", id_kategori);
+
+  await sql`
+  INSERT INTO produk_real (nama_produk, deskripsi, harga, id_kategori)
+  VALUES (${nama_produk}, ${deskripsi}, ${harga}, 1)
+`;
+  
+
+  revalidatePath('/admin/produk');
+  redirect('/admin/produk');
 }
 
 
 export async function updateProduct(formData: FormData) {
   const {
-    id_produk,
+
     nama_produk,
     deskripsi,
     harga,
@@ -63,14 +66,14 @@ export async function updateProduct(formData: FormData) {
     id_kategori: formData.get('kategori') ?? '',
   });
 
-  await sql`
-    UPDATE produk
-    SET nama_produk = ${nama_produk},
-        deskripsi = ${deskripsi},
-        harga = ${harga},
-        id_kategori = ${id_kategori}
-    WHERE id_produk = ${id_produk};
-  `;
+  // await sql`
+  //   UPDATE produk
+  //   SET nama_produk = ${nama_produk},
+  //       deskripsi = ${deskripsi},
+  //       harga = ${harga},
+  //       id_kategori = ${id_kategori}
+  //   WHERE id_produk = ${id_produk};
+  // `;
 
   revalidatePath('/admin/produk');
   redirect('/admin/produk');
@@ -78,8 +81,8 @@ export async function updateProduct(formData: FormData) {
 
 
 export async function deleteProduct(id: string) {
-    await sql`DELETE FROM produk WHERE id_produk = ${id}`;
-    revalidatePath('/admin/produk');
+  await sql`DELETE FROM produk WHERE id_produk = ${id}`;
+  revalidatePath('/admin/produk');
 }
 
 export async function addTransaksi(formData: FormData) {

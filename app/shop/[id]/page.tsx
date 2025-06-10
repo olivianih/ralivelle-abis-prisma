@@ -1,24 +1,19 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { dummyProducts } from '@/app/lib/placeholder-data';
+import { fetchProdukById } from '@/app/lib/data';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
+import Image from 'next/image';
 
-export default function ProductDetailPage() {
-  const router = useRouter();
-  const { id } = useParams();
+interface ProductDetailPageProps {
+  params: {
+    id: string;
+  };
+}
 
-  const [product, setProduct] = useState<any>(null);
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+  const product = await fetchProdukById(Number(params.id));
 
-  useEffect(() => {
-    if (id) {
-      const selectedProduct = dummyProducts.find((product) => product.id === id);
-      setProduct(selectedProduct);
-    }
-  }, [id]);
-
-  if (!product) return <div>Loading...</div>;
+  if (!product) {
+    return <div className="p-6 text-center text-gray-600">Produk tidak ditemukan.</div>;
+  }
 
   return (
     <div className="p-6">
@@ -26,23 +21,25 @@ export default function ProductDetailPage() {
         breadcrumbs={[
           { label: 'Ralivelle', href: '/' },
           { label: 'Shop', href: '/shop' },
-          { label: 'Detail Produk', href: '#', active: true }
+          { label: 'Detail Produk', href: '#', active: true },
         ]}
       />
 
       <div className="flex mt-6 gap-10">
         <div className="w-1/3 border border-gray-400 rounded-xl overflow-hidden">
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="w-full  object-cover"
+          <Image
+            src={product.foto || '/placeholder.jpg'}
+            alt={product.nama_produk}
+            width={500}
+            height={500}
+            className="w-full h-auto object-cover"
           />
         </div>
 
         <div className="w-1/2 flex flex-col justify-center">
-          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-          <p className="text-gray-700 mb-6">{product.description}</p>
-          <p className="text-blue-600 text-xl font-semibold">{product.price}</p>
+          <h1 className="text-3xl font-bold mb-4">{product.nama_produk}</h1>
+          <p className="text-gray-700 mb-6">{product.deskripsi}</p>
+          <p className="text-blue-600 text-xl font-semibold">Rp {product.harga}</p>
         </div>
       </div>
     </div>

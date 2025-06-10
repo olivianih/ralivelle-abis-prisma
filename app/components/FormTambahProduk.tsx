@@ -1,33 +1,18 @@
 'use client';
 
-import { kategoriField } from '@/app/lib/definitions';
+import { kategori_real } from '@/app/lib/definitions';
 import { Button } from '@/app/components/button';
 import { addProduct } from '@/app/lib/actions';
 import Link from 'next/link';
 
-export default function FormTambahProduk({
-    kategori,
-}: {
-    kategori: kategoriField[];
-}) {
+interface FormTambahProdukProps {
+    kategori: kategori_real[];
+}
+
+export default function FormTambahProduk({ kategori }: FormTambahProdukProps) {
     return (
         <form action={addProduct}>
             <div className="rounded-md bg-gray-50 p-4 md:p-6">
-
-                <div className="mb-4">
-                    <label htmlFor="id_produk" className="mb-2 block text-sm font-medium">
-                        ID Produk
-                    </label>
-                    <input
-                        id="id_produk"
-                        name="id_produk"
-                        type="text"
-                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
-                        placeholder="Misal: P001"
-                        required
-                    />
-                </div>
-
                 <div className="mb-4">
                     <label htmlFor="nama_produk" className="mb-2 block text-sm font-medium">
                         Nama Produk
@@ -63,7 +48,8 @@ export default function FormTambahProduk({
                     <input
                         id="harga"
                         name="harga"
-                        type="text"
+                        type="number"
+                        min="0"
                         className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
                         placeholder="10000"
                         required
@@ -71,17 +57,23 @@ export default function FormTambahProduk({
                 </div>
 
                 <div className="mb-4">
-                    <label htmlFor="kategori" className="mb-2 block text-sm font-medium">
+                    <label htmlFor="id_kategori" className="mb-2 block text-sm font-medium">
                         Kategori Produk
                     </label>
-                    <input
-                        id="kategori"
-                        name="kategori"
-                        type="text"
-                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
-                        placeholder="Masukkan kategori produk"
+                    <select
+                        id="id_kategori"
+                        name="id_kategori"
+                        className="block w-full rounded-md border border-gray-200 py-2 px-3 text-sm text-gray-700"
                         required
-                    />
+                    >
+                        <option value="">-- Pilih Kategori --</option>
+                        {kategori?.map((k) => (
+                            <option key={k.id_kategori} value={k.id_kategori}>
+                                {k.id_kategori} - {k.nama_kategori}
+                            </option>
+                        ))}
+                    </select>
+
                 </div>
             </div>
 

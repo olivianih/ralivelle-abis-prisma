@@ -27,7 +27,7 @@ export default function Search({ placeholder }: SearchProps) {
   }, 300);
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0">
+    <div className="mt-4 relative flex flex-1 flex-shrink-0">
       <input
         className="peer block w-full rounded-lg border border-gray-300 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
         placeholder={placeholder}

@@ -11,6 +11,15 @@ export type produk = {
   id_kategori: string;
 };
 
+export type produk_real = {
+  id_produk: number;
+  nama_produk: string;
+  harga: number;
+  foto: string;
+  deskripsi: string;
+  id_kategori: number;
+};
+
 export type produkField = {
   id_produk: number;
   nama_produk: string;
@@ -20,6 +29,18 @@ export type kategoriField = {
   id_kategori: string;
   nama_kategori: string;
 };
+
+export type kategori_real = {
+  id_kategori: string;
+  nama_kategori: string;
+};
+
+
+// export type kategoriField = {
+//   id: number;
+//   nama: string;
+// };
+
 
 
 export type supplier = {

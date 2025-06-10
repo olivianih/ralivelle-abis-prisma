@@ -1,5 +1,6 @@
 import postgres from 'postgres';
 import { supplier, pelanggan, transaksi, produk } from '@/generated/prisma';
+import { produk_real, kategori_real } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -10,13 +11,14 @@ export async function fetchProduk(query?: string) {
 
     let data;
     if (query && query.trim() !== '') {
-      data = await sql<produk[]>`
-        SELECT * FROM produk
+      data = await sql<produk_real[]>`
+        SELECT * FROM produk_real
         WHERE nama_produk ILIKE ${`%${query}%`}
       `;
     } else {
-      data = await sql<produk[]>`
-        SELECT * FROM produk
+      data = await sql<produk_real[]>`
+        SELECT * FROM produk_real
+        ORDER BY id_produk ASC
       `;
     }
 
@@ -29,8 +31,23 @@ export async function fetchProduk(query?: string) {
 }
 
 export async function fetchProdukById(id: string) {
-  const data = await sql`SELECT * FROM produk WHERE id_produk = ${id}`;
+  const data = await sql`SELECT * FROM produk_real WHERE id_produk = ${id}`;
   return data[0];
+}
+
+export async function fetchKategori() {
+  try {
+    const data = await sql<kategori_real[]>`
+      SELECT * FROM kategori_real
+      ORDER BY nama_kategori ASC
+    `;
+
+    console.log('Data fetch berhasil.');
+    return data;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch kategori.');
+  }
 }
 
 export async function deleteProduct(id_produk: number) {
