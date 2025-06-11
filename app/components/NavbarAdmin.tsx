@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-export default function Navbar() {
+export default function NavbarAdmin() {
   return (
     <aside className="fixed top-0 left-0 h-screen w-64 bg-[#D39C9C] text-white shadow-md flex flex-col items-start p-6 z-50">
       <div className="flex items-center gap-3 mb-10">
@@ -11,9 +11,7 @@ export default function Navbar() {
           alt="Ralivelle Florist Logo"
           className="h-10 w-10 rounded-full object-cover"
         />
-        <p className="text-xl font-bold tracking-wide">
-          Ralivelle Florist
-        </p>
+        <p className="text-xl font-bold tracking-wide">Ralivelle Florist</p>
       </div>
 
       <nav className="flex flex-col gap-4 w-full">
@@ -25,6 +23,9 @@ export default function Navbar() {
         </Link>
         <Link href="/admin/transaksi" className="text-white hover:underline">
           Transaksi
+        </Link>
+        <Link href="/admin/profil" className="text-white hover:underline">
+         Profil  Admin
         </Link>
         <a
           onClick={(e) => {

@@ -1,15 +1,12 @@
-// yy
-
-import '@/app/ui/global.css';
-// import { amita } from '@/app/ui/fonts';
-import Navbar from '@/app/components/NavbarAdmin';
+import NavbarAdmin from '@/app/components/NavbarAdmin';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <Navbar />
-      <main className="">{children}</main>
-    </>
+    <div className="min-h-screen flex">
+      <NavbarAdmin />
+      <main className="w-full p-8 bg-gray-50">
+        {children}
+      </main>
+    </div>
   );
 }
-

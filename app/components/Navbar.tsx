@@ -29,6 +29,10 @@ export default function Navbar() {
         <Link href="/contact" className="text-white hover:underline">
           Contact
         </Link>
+        <Link href="/pembeli" className="text-white hover:underline">
+          Profil Saya
+        </Link>
+
         <a
           onClick={(e) => {
             e.preventDefault();
