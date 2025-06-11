@@ -1,35 +1,39 @@
-// app/components/DeleteButton.tsx
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useTransition } from 'react';
 
-interface Props {
-  id_produk: number;
-  deleteAction: (data: FormData) => Promise<void>;
+interface DeleteButtonProps {
+  idName: string;
+  idValue: number;
+  deleteAction: (formData: FormData) => void;
 }
 
-export default function DeleteButton({ id_produk, deleteAction }: Props) {
-  const router = useRouter();
+export default function DeleteButton({
+  idName,
+  idValue,
+  deleteAction,
+}: DeleteButtonProps) {
   const [isPending, startTransition] = useTransition();
 
-  const handleDelete = async () => {
-    const formData = new FormData();
-    formData.append("id_produk", id_produk.toString());
-
-    await deleteAction(formData);
-    startTransition(() => {
-      router.refresh();
-    });
-  };
-
   return (
-    <button
-      onClick={handleDelete}
-      disabled={isPending}
-      className="text-red-600 hover:underline cursor-pointer bg-transparent border-none p-0"
+    <form
+      action={(formData) => {
+        const confirmed = confirm('Yakin ingin menghapus produk ini?');
+        if (confirmed) {
+          startTransition(() => {
+            deleteAction(formData);
+          });
+        }
+      }}
     >
-      {isPending ? "Menghapus..." : "Hapus"}
-    </button>
+      <input type="hidden" name={idName} value={idValue} />
+      <button
+        type="submit"
+        disabled={isPending}
+        className="text-red-600 hover:underline disabled:opacity-50"
+      >
+        {isPending ? 'Menghapus...' : 'Hapus'}
+      </button>
+    </form>
   );
 }

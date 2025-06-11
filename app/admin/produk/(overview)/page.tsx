@@ -3,27 +3,31 @@ import Breadcrumbs from "@/app/components/Breadcrumbs";
 import Search from "@/app/components/Search";
 import { Suspense } from "react";
 import Link from "next/link";
-import { lusitana } from "@/app/ui/fonts";
 import { TabelProdukSkeleton } from "@/app/ui/skeletonProduk";
-// import { useRouter } from 'next/navigation';
 import DeleteButton from "@/app/components/Delete";
-
+import { handleDelete } from "@/app/lib/actions";
 
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams?: { query?: string };
+  searchParams?: { query?: string; page?: string };
 }) {
-  const products = await fetchProduk(searchParams?.query);
+  const query = searchParams?.query ?? "";
+  const page = Number(searchParams?.page ?? 1);
+  const limit = 6;
 
+  const { produk: products, total } = await fetchProduk(query, page, limit);
+  const totalPages = Math.ceil(total / limit);
 
-  async function handleDelete(data: FormData) {
-      "use server";
-      const id_produk = data.get("id_produk");
-      if (typeof id_produk === "string") {
-        await deleteProduct(Number(id_produk));
-      }
+  async function handleDelete(formData: FormData) {
+    "use server";
+    const id = formData.get("id_produk");
+    if (typeof id === "string") {
+      await deleteProduct(Number(id));
     }
+  }
+
+
   return (
     <section className="w-full p-6">
       <Breadcrumbs
@@ -70,20 +74,32 @@ export default async function ShopPage({
                     >
                       Edit
                     </Link>
-                    <DeleteButton id_produk={product.id_produk} deleteAction={handleDelete} className="inline">
-                      <input type="hidden" name="id_produk" value={product.id_produk} />
-                      <button
-                        type="submit"
-                        className="text-red-600 hover:underline cursor-pointer bg-transparent border-none p-0"
-                      >
-                        Hapus
-                      </button>
-                    </DeleteButton>
+                    <DeleteButton
+                      idName="id_produk"
+                      idValue={product.id_produk}
+                      deleteAction={handleDelete} // ✅ sekarang valid
+                    />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex justify-center mt-6 gap-2">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <Link
+              key={i + 1}
+              href={`?page=${i + 1}${query ? `&query=${query}` : ""}`}
+              className={`px-4 py-2 border rounded ${page === i + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-blue-600"
+                }`}
+            >
+              {i + 1}
+            </Link>
+          ))}
         </div>
       </Suspense>
     </section>

@@ -4,34 +4,34 @@ import { produk_real, kategori_real, transaksi_real } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-export async function fetchProduk(query?: string) {
-  try {
-    console.log('Fetching produk data...');
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+export async function fetchProduk(query = '', page = 1, limit = 6) {
+  const offset = (page - 1) * limit;
 
-    let data;
-    if (query && query.trim() !== '') {
-      data = await sql<produk_real[]>`
+  const produkQuery = query.trim() !== ''
+    ? sql<produk_real[]>`
         SELECT * FROM produk_real
         WHERE nama_produk ILIKE ${`%${query}%`}
-      `;
-    } else {
-      data = await sql<produk_real[]>`
+        ORDER BY id_produk ASC
+        LIMIT ${limit} OFFSET ${offset}
+      `
+    : sql<produk_real[]>`
         SELECT * FROM produk_real
         ORDER BY id_produk ASC
+        LIMIT ${limit} OFFSET ${offset}
       `;
-    }
 
-    console.log('Data fetch berhasil.');
-    return data;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch products.');
-  }
+  const countQuery = query.trim() !== ''
+    ? sql`SELECT COUNT(*)::int AS count FROM produk_real WHERE nama_produk ILIKE ${`%${query}%`}`
+    : sql`SELECT COUNT(*)::int AS count FROM produk_real`;
+
+  const [produk, countResult] = await Promise.all([produkQuery, countQuery]);
+  const total = countResult[0]?.count ?? 0;
+
+  return { produk, total };
 }
 
 export async function fetchProdukById(id: string) {
-  const data = await sql`SELECT * FROM produk_real WHERE id_produk = ${id}`;
+  const data = await sql `SELECT * FROM produk_real WHERE id_produk = ${id}`;
   return data[0];
 }
 
@@ -98,6 +98,7 @@ export async function fetchTransaksi(query: string | undefined) {
   try {
     const data = await sql<transaksi_real[]>`
       SELECT * FROM transaksi_real
+      ORDER BY id_transaksi DESC
       ${query ? sql`WHERE nama_pelanggan ILIKE ${'%' + query + '%'}` : sql``}
     `;
     console.log('Data fetch berhasil.');
@@ -105,6 +106,22 @@ export async function fetchTransaksi(query: string | undefined) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch transaksi.');
+  }
+}
+
+export async function deleteTransaksi(id: number) {
+  await sql`DELETE FROM transaksi WHERE id_transaksi = ${id}`;
+}
+
+export async function deleteProduk(id_produk: number) {
+  try {
+    await sql`
+      DELETE FROM produk_real
+      WHERE id_produk = ${id_produk}
+    `;
+  } catch (error) {
+    console.error('Gagal menghapus produk:', error);
+    throw new Error('Gagal menghapus produk.');
   }
 }
 

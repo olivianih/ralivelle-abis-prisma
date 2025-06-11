@@ -3,12 +3,13 @@
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { deleteProduk } from '@/app/lib/data';
 import postgres from 'postgres';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 const ProductSchema = z.object({
-  // id_produk: z.coerce.number(),
+  id_produk: z.coerce.number(),
   nama_produk: z.string(),
   deskripsi: z.string(),
   harga: z.coerce.number(),
@@ -53,7 +54,7 @@ export async function addProduct(formData: FormData) {
 
 export async function updateProduct(formData: FormData) {
   const {
-
+    id_produk,
     nama_produk,
     deskripsi,
     harga,
@@ -62,28 +63,32 @@ export async function updateProduct(formData: FormData) {
     id_produk: formData.get('id_produk'),
     nama_produk: formData.get('nama_produk'),
     deskripsi: formData.get('deskripsi'),
-    harga: formData.get('harga'),
-    id_kategori: formData.get('kategori') ?? '',
+    harga: Number(formData.get('harga')),
+    id_kategori: formData.get('id_kategori') ?? '',
   });
 
-  // await sql`
-  //   UPDATE produk
-  //   SET nama_produk = ${nama_produk},
-  //       deskripsi = ${deskripsi},
-  //       harga = ${harga},
-  //       id_kategori = ${id_kategori}
-  //   WHERE id_produk = ${id_produk};
-  // `;
+  console.log("ID KATEGORI YANG DIKIRIM:", id_kategori);
+
+
+  await sql`
+  UPDATE produk_real
+  SET nama_produk = ${nama_produk},
+      deskripsi = ${deskripsi},
+      harga = ${harga},
+      id_kategori = ${id_kategori}
+  WHERE id_produk = ${id_produk};
+`;
+  console.log({ id_kategori });
 
   revalidatePath('/admin/produk');
   redirect('/admin/produk');
 }
 
 
-export async function deleteProduct(id: string) {
-  await sql`DELETE FROM produk WHERE id_produk = ${id}`;
-  revalidatePath('/admin/produk');
-}
+// export async function deleteProduct(id: number) {
+//   await sql`DELETE FROM produk_real WHERE id_produk = ${id}`;
+//   revalidatePath('/admin/produk/(overview)');
+// }
 
 export async function addTransaksi(formData: FormData) {
   const {
@@ -119,4 +124,12 @@ export async function addTransaksi(formData: FormData) {
 
   revalidatePath('/admin/transaksi');
   redirect('/admin/transaksi');
+}
+
+export async function handleDelete(formData: FormData) {
+  const id = formData.get('id_produk');
+  if (typeof id === 'string') {
+    await deleteProduk(Number(id));
+    revalidatePath('/admin/produk');
+  }
 }

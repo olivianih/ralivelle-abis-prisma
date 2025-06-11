@@ -1,13 +1,12 @@
 import Search from "@/app/components/Search";
 import { fetchTransaksi } from "@/app/lib/data";
 import Link from "next/link";
+import DeleteButton from "@/app/components/Delete";
+import { handleDeleteTransaksi } from "@/app/lib/actions";
 
-export default async function TransaksiPage({
-  searchParams,
-}: {
-  searchParams?: { query?: string };
-}) {
-  const transaksi = await fetchTransaksi(searchParams?.query);
+export default async function TransaksiPage({ searchParams }: { searchParams?: { query?: string } }) {
+  const query = searchParams?.query ?? "";
+  const transaksi = await fetchTransaksi(query);
 
   return (
     <main className="p-6 bg-white min-h-screen">
@@ -30,6 +29,7 @@ export default async function TransaksiPage({
             <th className="p-2">Pelanggan</th>
             <th className="p-2">Tanggal</th>
             <th className="p-2">Total</th>
+            <th className="p-2">Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -45,9 +45,14 @@ export default async function TransaksiPage({
                   day: "numeric",
                 })}
               </td>
-
               <td className="p-2 text-center">{item.total_harga}</td>
-
+              <td className="p-2 text-center">
+                {/* <DeleteButton
+                  idName="id_transaksi"
+                  idValue={item.id_transaksi}
+                  deleteAction={handleDeleteTransaksi}
+                /> */}
+              </td>
             </tr>
           ))}
         </tbody>

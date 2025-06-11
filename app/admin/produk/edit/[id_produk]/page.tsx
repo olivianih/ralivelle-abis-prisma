@@ -1,24 +1,27 @@
-import Form from '@/app/components/FormEditProduk';
-import Breadcrumbs from '@/app/components/Breadcrumbs';
-import { fetchProdukById } from '@/app/lib/data';
+import { fetchProdukById, fetchKategori } from '@/app/lib/data';
 import { updateProduct } from '@/app/lib/actions';
+import FormEditProduk from '@/app/components/FormEditProduk';
 
-export default async function Page({ params }: { params: { id_produk: string } }) {
+interface PageProps {
+  params: { id: string };
+}
+
+export default async function EditProdukPage({ params }: { params: { id_produk: string } }) {
   const produk = await fetchProdukById(params.id_produk);
+  const kategori = await fetchKategori();
 
   if (!produk) {
-    return <div>Produk tidak ditemukan.</div>;
+    return <p>Produk tidak ditemukan</p>;
   }
 
   return (
-    <main>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: "Katalog Produk", href: "/admin" },
-          { label: "Edit Produk", href: `/admin/produk/edit/${params.id_produk}`, active: true },
-        ]}
+    <main className="max-w-xl mx-auto p-4">
+      <h1 className="text-xl font-bold mb-4">Edit Produk</h1>
+      <FormEditProduk
+        initialData={produk}
+        kategori={kategori}
+        updateAction={updateProduct}
       />
-      <Form initialData={produk} updateAction={updateProduct} />
     </main>
   );
 }
