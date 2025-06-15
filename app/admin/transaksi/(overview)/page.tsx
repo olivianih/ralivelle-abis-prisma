@@ -1,12 +1,19 @@
 import Search from "@/app/components/Search";
-import { fetchTransaksi } from "@/app/lib/data";
+import { fetchTransaksi, deleteTransaksi } from "@/app/lib/data";
 import Link from "next/link";
 import DeleteButton from "@/app/components/Delete";
-import { handleDeleteTransaksi } from "@/app/lib/actions";
 
 export default async function TransaksiPage({ searchParams }: { searchParams?: { query?: string } }) {
   const query = searchParams?.query ?? "";
   const transaksi = await fetchTransaksi(query);
+
+  async function handleDelete(formData: FormData) {
+    "use server";
+    const id = formData.get("id_transaksi");
+    if (typeof id === "string") {
+      await deleteTransaksi(Number(id));
+    }
+  }
 
   return (
     <main className="p-6 bg-white min-h-screen">
@@ -47,11 +54,11 @@ export default async function TransaksiPage({ searchParams }: { searchParams?: {
               </td>
               <td className="p-2 text-center">{item.total_harga}</td>
               <td className="p-2 text-center">
-                {/* <DeleteButton
+                <DeleteButton
                   idName="id_transaksi"
                   idValue={item.id_transaksi}
-                  deleteAction={handleDeleteTransaksi}
-                /> */}
+                  deleteAction={handleDelete}
+                />
               </td>
             </tr>
           ))}

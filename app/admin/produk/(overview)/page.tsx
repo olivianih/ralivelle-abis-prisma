@@ -77,7 +77,7 @@ export default async function ShopPage({
                     <DeleteButton
                       idName="id_produk"
                       idValue={product.id_produk}
-                      deleteAction={handleDelete} // ✅ sekarang valid
+                      deleteAction={handleDelete}
                     />
                   </td>
                 </tr>
@@ -86,7 +86,6 @@ export default async function ShopPage({
           </table>
         </div>
 
-        {/* Pagination */}
         <div className="flex justify-center mt-6 gap-2">
           {Array.from({ length: totalPages }, (_, i) => (
             <Link

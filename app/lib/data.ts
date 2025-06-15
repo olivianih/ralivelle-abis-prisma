@@ -54,9 +54,9 @@ export async function deleteProduct(id_produk: number) {
   try {
     console.log(`Deleting product with id_produk = ${id_produk}`);
     await sql`
-      DELETE FROM produk WHERE id_produk = ${id_produk}
+      DELETE FROM produk_real WHERE id_produk = ${id_produk}
     `;
-    console.log("Delete successful.");
+    // console.log("Delete successful.");
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to delete product.");
@@ -98,8 +98,8 @@ export async function fetchTransaksi(query: string | undefined) {
   try {
     const data = await sql<transaksi_real[]>`
       SELECT * FROM transaksi_real
-      ORDER BY id_transaksi DESC
       ${query ? sql`WHERE nama_pelanggan ILIKE ${'%' + query + '%'}` : sql``}
+      ORDER BY id_transaksi DESC
     `;
     console.log('Data fetch berhasil.');
     return data;
@@ -109,8 +109,8 @@ export async function fetchTransaksi(query: string | undefined) {
   }
 }
 
-export async function deleteTransaksi(id: number) {
-  await sql`DELETE FROM transaksi WHERE id_transaksi = ${id}`;
+export async function deleteTransaksi(id_transaksi: number) {
+  await sql`DELETE FROM transaksi_real WHERE id_transaksi = ${id_transaksi}`;
 }
 
 export async function deleteProduk(id_produk: number) {

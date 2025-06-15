@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { deleteProduct } from '@/app/lib/actions'
+// import { deleteProduct } from '@/app/lib/actions'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
