@@ -2,12 +2,14 @@ import { fetchProdukById } from '@/app/lib/data';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
 import Image from 'next/image';
 
-type Params = Promise<{ id: string }>;
+type PageProps = {
+  searchParams: Promise<{ query?: string; page?: string }>;
+};
 
-export default async function ProductDetailPage({ params }: { params: Params }) {
-  const { id } = await params;
+export default async function ShopPage({ searchParams }: { searchParams?: { id_produk?: string } }) {
+  const { id_produk = '' } = await Promise.resolve(searchParams ?? {});
 
-  const product = await fetchProdukById(id);
+  const product = await fetchProdukById(id_produk);
   if (!product) {
     return <div className="p-6 text-center text-gray-600">Produk tidak ditemukan.</div>;
   }
