@@ -13,7 +13,7 @@ import { cookies } from 'next/headers';
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 const ProductSchema = z.object({
-  id_produk: z.coerce.number(),
+  // id_produk: z.coerce.number(),
   nama_produk: z.string(),
   deskripsi: z.string(),
   harga: z.coerce.number(),
@@ -21,10 +21,8 @@ const ProductSchema = z.object({
 });
 
 const TransaksiSchema = z.object({
-  // id_transaksi: z.string(),
   id_produk: z.string(),
   nama_pelanggan: z.string(),
-  // tanggal_transaksi: z.string(),
   total_harga: z.coerce.string(),
 });
 
