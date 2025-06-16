@@ -26,7 +26,7 @@ export default async function TransaksiPage(props: any) {
 
       <div className="mt-4 mb-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Cari transaksi..." />
-        <Link href="./transaksi/tambah">
+        <Link href="/admin/transaksi/tambah">
           <button className="bg-[#ECD3DB] hover:bg-[#D39C9C] text-black px-4 py-2 rounded-lg text-sm">
             Tambah Transaksi
           </button>

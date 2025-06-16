@@ -126,8 +126,8 @@ export async function addTransaksi(formData: FormData) {
   )
 `;
 
-  revalidatePath('/admin/transaksi');
-  redirect('/admin/transaksi');
+  revalidatePath('/admin/transaksi/overview');
+  redirect('/admin/transaksi/overview');
 }
 
 export async function handleDelete(formData: FormData) {

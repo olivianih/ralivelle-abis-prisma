@@ -3,13 +3,13 @@ import Breadcrumbs from '@/app/components/Breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
 
 export default async function Page() {
-  const produkList = await fetchProduk();
+  const { produk: produkList } = await fetchProduk(); // ✅ perbaikan di sini
 
   return (
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Data Transaksi', href: '/admin/transaksi' },
+          { label: 'Data Transaksi', href: '/admin/transaksi/overview' },
           { label: 'Tambah Transaksi', href: '/admin/transaksi/tambah', active: true },
         ]}
       />
