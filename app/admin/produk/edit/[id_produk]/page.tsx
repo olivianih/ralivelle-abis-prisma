@@ -2,9 +2,10 @@ import { fetchProdukById, fetchKategori } from '@/app/lib/data';
 import { updateProduct } from '@/app/lib/actions';
 import FormEditProduk from '@/app/components/FormEditProduk';
 
-interface PageProps {
+type PageProps = {
   params: { id_produk: string };
-}
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
 
 export default async function EditProdukPage({ params }: PageProps) {
   const produk = await fetchProdukById(params.id_produk);
