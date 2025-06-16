@@ -8,8 +8,9 @@ type PageProps = {
   };
 };
 
-export default async function EditProdukPage({ params }: PageProps) {
-  const id_produk = params.id_produk;
+export default async function EditProdukPage(props: PageProps) {
+  const { id_produk } = props.params;
+
   const produk = await fetchProdukById(id_produk);
   const kategori = await fetchKategori();
 
