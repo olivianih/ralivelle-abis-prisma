@@ -6,18 +6,11 @@ import Link from "next/link";
 import { TabelProdukSkeleton } from "@/app/ui/skeletonProduk";
 import DeleteButton from "@/app/components/Delete";
 
-// type Props = {
-//   searchParams?: {
-//     query?: string;
-//     page?: string;
-//   };
-// };
-
-export default async function ShopPage({
-  searchParams,
-}: {
+type PageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+};
+
+export default async function ShopPage({ searchParams }: PageProps) {
   const query =
     typeof searchParams?.query === "string" ? searchParams.query : "";
   const page =
