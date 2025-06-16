@@ -3,7 +3,12 @@ import { fetchTransaksi, deleteTransaksi } from "@/app/lib/data";
 import Link from "next/link";
 import DeleteButton from "@/app/components/Delete";
 
-export default async function TransaksiPage({ searchParams }: { searchParams?: { query?: string } }) {
+type PageProps = {
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
+export default async function TransaksiPage(props: any) {
+  const searchParams = await props.searchParams;
   const query = searchParams?.query ?? "";
   const transaksi = await fetchTransaksi(query);
 
