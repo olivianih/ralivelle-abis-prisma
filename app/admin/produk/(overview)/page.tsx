@@ -16,10 +16,12 @@ import DeleteButton from "@/app/components/Delete";
 export default async function ShopPage({
   searchParams,
 }: {
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  const query = typeof searchParams?.query === "string" ? searchParams.query : "";
-  const page = typeof searchParams?.page === "string" ? parseInt(searchParams.page) : 1;
+  const query =
+    typeof searchParams?.query === "string" ? searchParams.query : "";
+  const page =
+    typeof searchParams?.page === "string" ? parseInt(searchParams.page) : 1;
 
   const limit = 6;
   const { produk: products, total } = await fetchProduk(query, page, limit);
