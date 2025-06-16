@@ -5,19 +5,21 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { TabelProdukSkeleton } from "@/app/ui/skeletonProduk";
 import DeleteButton from "@/app/components/Delete";
-// import { handleDelete } from "@/app/lib/actions";
 
-type Props = {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-};
+// type Props = {
+//   searchParams?: {
+//     query?: string;
+//     page?: string;
+//   };
+// };
 
-export default async function ShopPage({ searchParams }: Props) {
-
-  const query = searchParams?.query ?? "";
-  const page = Number(searchParams?.page ?? 1);
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>;
+}) {
+  const query = typeof searchParams?.query === "string" ? searchParams.query : "";
+  const page = typeof searchParams?.page === "string" ? parseInt(searchParams.page) : 1;
   const limit = 6;
 
   const { produk: products, total } = await fetchProduk(query, page, limit);
