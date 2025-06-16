@@ -84,8 +84,8 @@ export async function updateProduct(formData: FormData) {
 `;
   console.log({ id_kategori });
 
-  revalidatePath('/admin/produk');
-  redirect('/admin/produk');
+  revalidatePath('/admin/produk/overview');
+  redirect('/admin/produk/overview');
 }
 
 

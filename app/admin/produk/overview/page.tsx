@@ -69,7 +69,7 @@ export default async function ShopPage({ searchParams }: PageProps) {
                   <td className="px-4 py-2 border-b text-center">{product.id_kategori}</td>
                   <td className="px-4 py-2 border-b text-center space-x-2">
                     <Link
-                      href={`./produk/edit/${product.id_produk}`}
+                      href={`/admin/produk/edit/${product.id_produk}`}
                       className="text-blue-600 hover:underline"
                     >
                       Edit
