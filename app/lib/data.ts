@@ -2,7 +2,9 @@ import postgres from 'postgres';
 import { supplier, pelanggan, transaksi, produk } from '@/generated/prisma';
 import { produk_real, kategori_real, transaksi_real } from './definitions';
 
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+export const db = sql
 
 export async function fetchProduk(query = '', page = 1, limit = 6) {
   const offset = (page - 1) * limit;

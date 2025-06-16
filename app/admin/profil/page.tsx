@@ -1,37 +1,35 @@
-'use client';
+import { cookies } from 'next/headers';
+import postgres from 'postgres';
 
-export default function AdminProfilePage() {
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+
+export default async function AdminProfilePage() {
+  const email = cookies().get('user_email')?.value;
+
+  if (!email) {
+    return <div className="p-10">Silakan login terlebih dahulu.</div>;
+  }
+
+  const [user] = await sql`
+    SELECT * FROM users WHERE email = ${email}
+  `;
+
+  if (!user) {
+    return <div className="p-10">Pengguna tidak ditemukan.</div>;
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 p-10 font-sans">
-      <div className="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-md">
-        <h1 className="text-3xl font-bold mb-6 text-center text-black-700">
-          Profil Admin
-        </h1>
-
+    <div className="min-h-screen bg-white p-10 font-sans">
+      <div className="max-w-2xl mx-auto bg-gray-100 p-8 rounded-2xl shadow-md">
+        <h1 className="text-3xl font-bold mb-6 text-center text-pink-700">Profil Admin</h1>
         <div className="space-y-6 text-lg">
           <div>
-            <label className="block text-gray-600 font-semibold">Nama Lengkap</label>
-            <p className="text-black">Admin</p>
-          </div>
-          <div>
-            <label className="block text-gray-600 font-semibold">Tanggal Lahir</label>
-            <p className="text-black">1 Januari 2000</p>
-          </div>
-          <div>
-            <label className="block text-gray-600 font-semibold">Alamat</label>
-            <p className="text-black">Jl. Mawar No. 10, Sleman, Yogyakarta</p>
-          </div>
-          <div>
-            <label className="block text-gray-600 font-semibold">Nomor Telepon</label>
-            <p className="text-black">0812-3456-7890</p>
-          </div>
-          <div>
             <label className="block text-gray-600 font-semibold">Email</label>
-            <p className="text-black">admin@ralivelle.com</p>
+            <p className="text-black">{user.email}</p>
           </div>
           <div>
             <label className="block text-gray-600 font-semibold">Role</label>
-            <p className="text-black capitalize">Admin</p>
+            <p className="text-black">{user.role}</p>
           </div>
         </div>
       </div>

@@ -1,26 +1,27 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { login } from '@/app/lib/actions';
+
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (username === 'admin123' && password === '12345') {
-      localStorage.setItem('username', username);
-      router.push('/admin/dashboard');
-    } else if (username === 'user123' && password === '12345') {
-      localStorage.setItem('username', username);
-      router.push('/home');
-    } else {
-      setError('Username atau password salah');
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+
+    const res = await login(null, formData);
+
+    if (res?.errors) {
+      setError(res.errors.email[0]);
     }
+    // redirect sudah ditangani dalam action
   };
 
   return (
@@ -45,13 +46,13 @@ export default function LoginPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Username<span className="text-red-500">*</span>
+              Email<span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
+              type="email"
               className="w-full px-4 py-2 border border-gray-300 rounded-md"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
