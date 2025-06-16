@@ -2,14 +2,10 @@ import { fetchProdukById, fetchKategori } from "@/app/lib/data";
 import { updateProduct } from "@/app/lib/actions";
 import FormEditProduk from "@/app/components/FormEditProduk";
 
-type PageProps = {
-  params: {
-    id_produk: string;
-  };
-};
+type Params = Promise<{ id_produk: string }>;
 
-export default async function EditProdukPage(props: any) {
-  const { id_produk } = props.params;
+export default async function EditProdukPage({ params }: { params: Params }) {
+  const { id_produk } = await params;
 
   const produk = await fetchProdukById(id_produk);
   const kategori = await fetchKategori();
