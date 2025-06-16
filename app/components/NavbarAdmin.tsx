@@ -18,7 +18,7 @@ export default function NavbarAdmin() {
         <Link href="/admin/dashboard" className="text-white hover:underline">
           Dashboard
         </Link>
-        <Link href="/admin/produk" className="text-white hover:underline">
+        <Link href="/admin/produk/overview" className="text-white hover:underline">
           Produk
         </Link>
         <Link href="/admin/transaksi" className="text-white hover:underline">
