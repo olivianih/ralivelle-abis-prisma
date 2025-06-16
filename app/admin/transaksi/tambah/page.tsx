@@ -3,7 +3,7 @@ import Breadcrumbs from '@/app/components/Breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
 
 export default async function Page() {
-  const { produk: produkList } = await fetchProduk(); // ✅ perbaikan di sini
+  const { produk: produkList } = await fetchProduk();
 
   return (
     <main>

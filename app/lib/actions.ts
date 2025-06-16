@@ -51,8 +51,8 @@ export async function addProduct(formData: FormData) {
 `;
 
 
-  revalidatePath('/admin/produk');
-  redirect('/admin/produk');
+  revalidatePath('/admin/produk/overview');
+  redirect('/admin/produk/overview');
 }
 
 
@@ -138,7 +138,6 @@ export async function handleDelete(formData: FormData) {
   }
 }
 
-// LOGIN
 export async function login(_: any, formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
@@ -160,7 +159,6 @@ export async function login(_: any, formData: FormData) {
   else redirect('/home')
 }
 
-// SIGNUP
 export async function signup(_: any, formData: FormData) {
   const name = formData.get('name') as string
   const email = formData.get('email') as string

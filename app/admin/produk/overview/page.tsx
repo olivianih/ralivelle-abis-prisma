@@ -40,7 +40,7 @@ export default async function ShopPage(props: any) {
 
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Cari produk..." />
-        <Link href="./produk/tambah">
+        <Link href="/admin/produk/tambah">
           <button className="bg-[#ECD3DB] hover:bg-[#D39C9C] text-black px-4 py-2 rounded-lg text-sm">
             Tambah Produk
           </button>
