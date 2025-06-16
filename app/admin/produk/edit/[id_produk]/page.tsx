@@ -3,11 +3,12 @@ import { updateProduct } from '@/app/lib/actions';
 import FormEditProduk from '@/app/components/FormEditProduk';
 
 type PageProps = {
-  params: { id_produk: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  params: {
+    id_produk: string;
+  };
 };
-
-export default async function EditProdukPage({ params }: PageProps) {
+export default async function EditProdukPage({ params }: { params: PageProps }) {
+  const id_produk = params.id_produk;
   const produk = await fetchProdukById(params.id_produk);
   const kategori = await fetchKategori();
 
