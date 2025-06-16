@@ -1,7 +1,3 @@
-// 'use client';
-
-// import { useEffect, useState } from 'react';
-// import { dummyProducts, penjualanBulanan } from '@/app/lib/placeholder-data';
 import { fetchSupplier, fetchPelanggan, fetchTransaksi, fetchProduk } from '@/app/lib/data';
 import RevenueChart from '@/app/components/RevenueChart';
 import PenjualanChart from '@/app/components/PenjualanChart';
@@ -11,10 +7,6 @@ import { Suspense } from 'react';
 import { PenjualanChartSkeleton, RevenueChartSkeleton } from '@/app/ui/skeletonDashboard';
 
 export default async function AdminDashboard() {
-    // const [currentTime, setCurrentTime] = useState('');
-    // const [adminName, setAdminName] = useState('');
-    // const [noteInput, setNoteInput] = useState('');
-    // const [notes, setNotes] = useState<string[]>([]);
     const supplier = await fetchSupplier();
     const pelanggan = await fetchPelanggan();
 
@@ -141,28 +133,10 @@ export default async function AdminDashboard() {
                 // disabled
                 ></textarea>
                 <button
-                    // onClick={handleAddNote}
                     className="px-4 py-2 bg-white text-[#D39C9C] rounded-md hover:bg-green-400 transition mb-4"
                 >
                     Simpan Catatan
                 </button>
-                {/* {notes.length > 0 ? (
-                    <ul className="space-y-2">
-                        {notes.map((note, index) => (
-                            <li key={index} className="flex justify-between items-center bg-gray-100 rounded-lg p-3">
-                                <span className="text-gray-700">{note}</span>
-                                <button
-                                    onClick={() => handleDeleteNote(index)}
-                                    className="text-sm text-red-500 hover:text-red-700 font-medium"
-                                >
-                                    Hapus
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="text-sm text-gray-500">Belum ada catatan.</p>
-                )} } */}
             </div>
         </div>
     );
