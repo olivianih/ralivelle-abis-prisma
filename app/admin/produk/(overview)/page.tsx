@@ -20,8 +20,8 @@ export default async function ShopPage({
 }) {
   const query = typeof searchParams?.query === "string" ? searchParams.query : "";
   const page = typeof searchParams?.page === "string" ? parseInt(searchParams.page) : 1;
-  const limit = 6;
 
+  const limit = 6;
   const { produk: products, total } = await fetchProduk(query, page, limit);
   const totalPages = Math.ceil(total / limit);
 
@@ -97,8 +97,8 @@ export default async function ShopPage({
               key={i + 1}
               href={`?page=${i + 1}${query ? `&query=${query}` : ""}`}
               className={`px-4 py-2 border rounded ${page === i + 1
-                  ? "bg-blue-600 text-white"
-                  : "bg-white text-blue-600"
+                ? "bg-blue-600 text-white"
+                : "bg-white text-blue-600"
                 }`}
             >
               {i + 1}
