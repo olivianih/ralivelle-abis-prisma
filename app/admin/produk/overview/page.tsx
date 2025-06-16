@@ -10,7 +10,8 @@ type PageProps = {
   searchParams?: { [key: string]: string | string[] | undefined };
 };
 
-export default async function ShopPage({ searchParams }: PageProps) {
+export default async function ShopPage(props: any) {
+  const searchParams = await props.searchParams;
   const query =
     typeof searchParams?.query === "string" ? searchParams.query : "";
   const page =
