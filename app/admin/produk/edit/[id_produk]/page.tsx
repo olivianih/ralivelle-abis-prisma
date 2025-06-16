@@ -1,15 +1,13 @@
-import { fetchProdukById, fetchKategori } from '@/app/lib/data';
-import { updateProduct } from '@/app/lib/actions';
-import FormEditProduk from '@/app/components/FormEditProduk';
+import { fetchProdukById, fetchKategori } from "@/app/lib/data";
+import { updateProduct } from "@/app/lib/actions";
+import FormEditProduk from "@/app/components/FormEditProduk";
 
-type PageProps = {
-  params: {
-    id_produk: string;
-  };
-};
-
-export default async function EditProdukPage(props: PageProps) {
-  const { id_produk } = props.params;
+export default async function EditProdukPage({
+  params,
+}: {
+  params: { id_produk: string };
+}) {
+  const { id_produk } = params;
 
   const produk = await fetchProdukById(id_produk);
   const kategori = await fetchKategori();
