@@ -3,6 +3,8 @@ import { fetchTransaksi } from '@/app/lib/data';
 import { getJumlahTransaksiPerBulan } from '@/app/lib/utils';
 
 export default async function TransaksiChart() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const raw = await fetchTransaksi();
   const transaksi = raw.map((t) => ({
     id_transaksi: t.id_transaksi,

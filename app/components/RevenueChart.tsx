@@ -3,6 +3,7 @@ import { getRevenuePerBulan } from '@/app/lib/utils';
 import { fetchTransaksi } from '@/app/lib/data';
 
 export default async function RevenueChart() {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const raw = await fetchTransaksi();
   const transaksi = raw.map((t) => ({
     id_transaksi: t.id_transaksi,
