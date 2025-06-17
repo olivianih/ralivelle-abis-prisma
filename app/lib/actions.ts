@@ -20,6 +20,15 @@ const ProductSchema = z.object({
   id_kategori: z.coerce.number(),
 });
 
+const UpdateProductSchema = z.object({
+  id_produk: z.coerce.number(), // <-- dibutuhkan saat update
+  nama_produk: z.string(),
+  deskripsi: z.string(),
+  harga: z.coerce.number(),
+  id_kategori: z.coerce.number(),
+});
+
+
 const TransaksiSchema = z.object({
   id_produk: z.string(),
   nama_pelanggan: z.string(),
@@ -27,7 +36,7 @@ const TransaksiSchema = z.object({
 });
 
 const AddProductSchema = ProductSchema;
-const UpdateProductSchema = ProductSchema;
+// const UpdateProductSchema = UpdateProduct;
 
 const AddTransaksiSchema = TransaksiSchema;
 
@@ -62,12 +71,13 @@ export async function updateProduct(formData: FormData) {
     harga,
     id_kategori,
   } = UpdateProductSchema.parse({
-    id_produk: formData.get('id_produk'),
+    id_produk: formData.get('id_produk'), // <-- ini penting
     nama_produk: formData.get('nama_produk'),
     deskripsi: formData.get('deskripsi'),
     harga: Number(formData.get('harga')),
     id_kategori: formData.get('id_kategori') ?? '',
   });
+
 
   console.log("ID KATEGORI YANG DIKIRIM:", id_kategori);
 
